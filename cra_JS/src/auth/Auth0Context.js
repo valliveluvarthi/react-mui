@@ -60,12 +60,11 @@ AuthProvider.propTypes = {
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const initialize = useCallback(async () => {
     try {
       auth0Client = new Auth0Client({
-        client_id: AUTH0_API.clientId || '',
-        domain: AUTH0_API.domain || '',
+        client_id: AUTH0_API.clientId || 'BKkrxCvxuwhzr4sBr4Q15kSkFODw1LuR',
+        domain: AUTH0_API.domain || 'dev-d1ei-1fj.us.auth0.com',
         redirect_uri: window.location.origin,
       });
 

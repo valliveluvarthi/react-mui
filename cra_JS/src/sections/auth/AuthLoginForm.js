@@ -61,7 +61,7 @@ export default function AuthLoginForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
+      {/* <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
         <RHFTextField name="email" label="Email address" />
@@ -86,7 +86,7 @@ export default function AuthLoginForm() {
         <Link to={PATH_AUTH.resetPassword} component={RouterLink} variant="body2" color="inherit">
           Forgot password?
         </Link>
-      </Stack>
+      </Stack> */}
 
       <LoadingButton
         fullWidth
@@ -103,6 +103,7 @@ export default function AuthLoginForm() {
             color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
           },
         }}
+        onClick={()=>login()}
       >
         Login
       </LoadingButton>

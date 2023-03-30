@@ -43,9 +43,9 @@ export const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
   minHeight: '100vh',
   justifyContent: 'center',
-  padding: theme.spacing(15, 2),
+  padding: theme.spacing(10, 2),
   [theme.breakpoints.up('md')]: {
     flexShrink: 0,
-    padding: theme.spacing(30, 8, 0, 8),
+    padding: theme.spacing(32, 8, 0, 8),
   },
 }));
