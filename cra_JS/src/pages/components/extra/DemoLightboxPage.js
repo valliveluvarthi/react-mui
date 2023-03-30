@@ -36,7 +36,7 @@ export default function DemoLightboxPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Lightbox | Minimal UI</title>
+        <title> Extra Components: Lightbox | Shapiro 360</title>
       </Helmet>
 
       <Box

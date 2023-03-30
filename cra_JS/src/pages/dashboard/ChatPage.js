@@ -8,7 +8,7 @@ export default function ChatPage() {
   return (
     <>
       <Helmet>
-        <title> Chat | Minimal UI</title>
+        <title> Chat | Shapiro 360</title>
       </Helmet>
 
       <Chat />

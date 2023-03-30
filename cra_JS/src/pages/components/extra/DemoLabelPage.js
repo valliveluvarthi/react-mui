@@ -20,7 +20,7 @@ export default function DemoLabelPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Label | Minimal UI</title>
+        <title> Extra Components: Label | Shapiro 360</title>
       </Helmet>
 
       <Box

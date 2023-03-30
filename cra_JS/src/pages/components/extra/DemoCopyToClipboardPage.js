@@ -48,7 +48,7 @@ export default function DemoCopyToClipboardPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Copy To Clipboard | Minimal UI</title>
+        <title> Extra Components: Copy To Clipboard | Shapiro 360</title>
       </Helmet>
 
       <Box

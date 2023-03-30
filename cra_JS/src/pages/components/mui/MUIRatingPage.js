@@ -68,7 +68,7 @@ export default function MUIRatingPage() {
   return (
     <>
       <Helmet>
-        <title> MUI Components: Rating | Minimal UI</title>
+        <title> MUI Components: Rating | Shapiro 360</title>
       </Helmet>
 
       <Box

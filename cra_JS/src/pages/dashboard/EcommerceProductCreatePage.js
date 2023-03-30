@@ -17,7 +17,7 @@ export default function EcommerceProductCreatePage() {
   return (
     <>
       <Helmet>
-        <title> Ecommerce: Create a new product | Minimal UI</title>
+        <title> Ecommerce: Create a new product | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

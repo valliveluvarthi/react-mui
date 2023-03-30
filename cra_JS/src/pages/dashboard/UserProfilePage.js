@@ -68,7 +68,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Helmet>
-        <title> User: Profile | Minimal UI</title>
+        <title> User: Profile | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

@@ -38,7 +38,7 @@ export default function FoundationColorsPage() {
   return (
     <>
       <Helmet>
-        <title> Foundations: Colors | Minimal UI</title>
+        <title> Foundations: Colors | Shapiro 360</title>
       </Helmet>
 
       <Box

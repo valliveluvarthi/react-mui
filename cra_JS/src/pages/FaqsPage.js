@@ -10,7 +10,7 @@ export default function FaqsPage() {
   return (
     <>
       <Helmet>
-        <title> Faqs | Minimal UI</title>
+        <title> Faqs | Shapiro 360</title>
       </Helmet>
 
       <FaqsHero />

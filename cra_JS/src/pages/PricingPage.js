@@ -12,7 +12,7 @@ export default function PricingPage() {
   return (
     <>
       <Helmet>
-        <title> Pricing | Minimal UI</title>
+        <title> Pricing | Shapiro 360</title>
       </Helmet>
 
       <Container

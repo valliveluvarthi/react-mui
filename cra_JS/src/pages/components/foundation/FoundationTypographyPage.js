@@ -46,7 +46,7 @@ export default function FoundationTypographyPage() {
   return (
     <>
       <Helmet>
-        <title> Foundations: Typography | Minimal UI</title>
+        <title> Foundations: Typography | Shapiro 360</title>
       </Helmet>
 
       <Box

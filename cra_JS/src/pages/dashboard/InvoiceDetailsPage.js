@@ -24,7 +24,7 @@ export default function InvoiceDetailsPage() {
   return (
     <>
       <Helmet>
-        <title> Invoice: View | Minimal UI</title>
+        <title> Invoice: View | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

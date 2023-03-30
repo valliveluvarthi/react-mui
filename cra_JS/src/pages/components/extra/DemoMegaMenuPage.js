@@ -18,7 +18,7 @@ export default function DemoMegaMenuPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Mega Menu | Minimal UI</title>
+        <title> Extra Components: Mega Menu | Shapiro 360</title>
       </Helmet>
 
       <Box

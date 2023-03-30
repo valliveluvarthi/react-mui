@@ -29,7 +29,7 @@ export default function MUISwitchPage() {
   return (
     <>
       <Helmet>
-        <title> MUI Components: Switch | Minimal UI</title>
+        <title> MUI Components: Switch | Shapiro 360</title>
       </Helmet>
 
       <Box

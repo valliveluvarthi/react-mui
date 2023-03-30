@@ -55,7 +55,7 @@ export default function BlogPostsPage() {
   return (
     <>
       <Helmet>
-        <title> Blog: Posts | Minimal UI</title>
+        <title> Blog: Posts | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

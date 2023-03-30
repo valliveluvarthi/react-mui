@@ -85,7 +85,7 @@ export default function EcommerceShopPage() {
   return (
     <>
       <Helmet>
-        <title> Ecommerce: Shop | Minimal UI</title>
+        <title> Ecommerce: Shop | Shapiro 360</title>
       </Helmet>
 
       <FormProvider methods={methods}>

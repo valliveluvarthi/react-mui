@@ -13,7 +13,7 @@ export default function DemoScrollbarPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Scrollbar | Minimal UI</title>
+        <title> Extra Components: Scrollbar | Shapiro 360</title>
       </Helmet>
 
       <Box

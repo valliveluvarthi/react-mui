@@ -87,7 +87,7 @@ export default function MUIListPage() {
   return (
     <>
       <Helmet>
-        <title> MUI Components: List | Minimal UI</title>
+        <title> MUI Components: List | Shapiro 360</title>
       </Helmet>
 
       <Box

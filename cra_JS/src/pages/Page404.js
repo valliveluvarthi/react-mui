@@ -14,7 +14,7 @@ export default function Page404() {
   return (
     <>
       <Helmet>
-        <title> 404 Page Not Found | Minimal UI</title>
+        <title> 404 Page Not Found | Shapiro 360</title>
       </Helmet>
 
       <MotionContainer>

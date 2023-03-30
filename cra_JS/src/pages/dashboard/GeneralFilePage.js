@@ -128,7 +128,7 @@ export default function GeneralFilePage() {
   return (
     <>
       <Helmet>
-        <title> General: File | Minimal UI</title>
+        <title> General: File | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

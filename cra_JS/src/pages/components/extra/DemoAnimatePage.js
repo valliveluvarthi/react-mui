@@ -27,7 +27,7 @@ export default function DemoAnimatePage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Animate | Minimal UI</title>
+        <title> Extra Components: Animate | Shapiro 360</title>
       </Helmet>
 
       <Box

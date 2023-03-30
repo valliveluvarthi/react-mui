@@ -8,7 +8,7 @@ export default function MailPage() {
   return (
     <>
       <Helmet>
-        <title> Mail | Minimal UI</title>
+        <title> Mail | Shapiro 360</title>
       </Helmet>
 
       <Mail />

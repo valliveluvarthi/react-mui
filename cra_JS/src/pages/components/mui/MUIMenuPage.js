@@ -82,7 +82,7 @@ export default function MUIMenuPage() {
   return (
     <>
       <Helmet>
-        <title> MUI Components: Menu | Minimal UI</title>
+        <title> MUI Components: Menu | Shapiro 360</title>
       </Helmet>
 
       <Box

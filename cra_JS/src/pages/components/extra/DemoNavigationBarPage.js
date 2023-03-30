@@ -16,7 +16,7 @@ export default function DemoNavigationBarPage() {
   return (
     <>
       <Helmet>
-        <title> Extra Components: Navigation Bar | Minimal UI</title>
+        <title> Extra Components: Navigation Bar | Shapiro 360</title>
       </Helmet>
 
       <Box
