@@ -22,6 +22,10 @@ export const ResetPasswordPage = Loadable(lazy(() => import('../pages/auth/Reset
 
 // DASHBOARD: GENERAL
 export const GeneralAppPage = Loadable(lazy(() => import('../pages/dashboard/GeneralAppPage')));
+export const AddUserPage = Loadable(lazy(() => import('../pages/dashboard/AddUserPage')));
+export const CurrentUsersPage = Loadable(lazy(() => import('../pages/dashboard/CurrentUsersPage')));
+export const CurrentArticlesPage = Loadable(lazy(() => import('../pages/dashboard/CurrentArticlesPage')));
+export const AddArticlesPage = Loadable(lazy(() => import('../pages/dashboard/AddArticlesPage')));
 export const GeneralEcommercePage = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommercePage')));
 export const GeneralAnalyticsPage = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalyticsPage')));
 export const GeneralBankingPage = Loadable(lazy(() => import('../pages/dashboard/GeneralBankingPage')));

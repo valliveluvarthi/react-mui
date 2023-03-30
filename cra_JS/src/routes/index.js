@@ -125,6 +125,12 @@ import {
   DemoSnackbarPage,
   DemoTextMaxLinePage,
   DemoUploadPage,
+  //  user routes
+  AddUserPage,
+  CurrentUsersPage,
+  // articles routes
+  CurrentArticlesPage,
+  AddArticlesPage,
 } from './elements';
 
 // ----------------------------------------------------------------------
@@ -175,6 +181,10 @@ export default function Router() {
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralAppPage /> },
+        { path: 'add-user', element: <AddUserPage /> },
+        { path: 'current-articles', element: <CurrentArticlesPage /> },
+        { path: 'add-articles', element: <AddArticlesPage /> },
+        { path: 'current-users', element: <CurrentUsersPage /> },
         { path: 'ecommerce', element: <GeneralEcommercePage /> },
         { path: 'analytics', element: <GeneralAnalyticsPage /> },
         { path: 'banking', element: <GeneralBankingPage /> },

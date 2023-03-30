@@ -38,7 +38,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       }}
       {...other}
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 512 512">
+      {/* <svg xmlns="https://th.bing.com/th?id=AMMS_dd6dd9d5bdf01517ec66304ace6b1b5a&w=72&h=72&c=7&rs=1&qlt=80&o=6&cdv=1&dpr=1.5&pid=16.1" width="100%" height="100%" viewBox="0 0 512 512">
         <defs>
           <linearGradient id="BG1" x1="100%" x2="50%" y1="9.946%" y2="50%">
             <stop offset="0%" stopColor={PRIMARY_DARK} />
@@ -71,6 +71,12 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
           />
         </g>
       </svg>
+       */}
+       <img
+        src={`https://th.bing.com/th?id=AMMS_dd6dd9d5bdf01517ec66304ace6b1b5a&w=72&h=72&c=7&rs=1&qlt=80&o=6&cdv=1&dpr=1.5&pid=16.1`}
+        alt={"Shapiro 360"}
+        loading="lazy"
+      />
     </Box>
   );
 

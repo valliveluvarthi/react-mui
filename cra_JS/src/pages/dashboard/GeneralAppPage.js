@@ -35,33 +35,35 @@ import { SeoIllustration } from '../../assets/illustrations';
 // ----------------------------------------------------------------------
 
 const columns = [
-  { field: 'userID', headerName: 'User ID', width: 90 },
+  { field: 'userID', headerName: 'User ID', width: 100 },
   {
     field: 'userLogin',
     headerName: 'User Login',
-    width: 150,
+    width: 200,
     editable: true,
+    align: 'left',
   },
   {
     field: 'emailAddress',
     headerName: 'User Email Address',
-    width: 150,
+    width: 200,
     editable: true,
+    align: 'left',
   },
   {
     field: 'programsToAccess',
-    headerName: 'ProgramsToAccess',
-    type: 'number',
-    width: 110,
+    headerName: 'Programs To Access',
+    width: 200,
     editable: true,
-  },
+    align: 'left',
+  },  
   {
 
     field: 'actions',
 
     headerName: 'Actions',
 
-    width: 80,
+    width: 150,
 
     align: 'left',
 

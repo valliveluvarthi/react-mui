@@ -40,6 +40,26 @@ const navConfig = [
     subheader: 'general',
     items: [
       { title: 'Dashboard', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
+      {
+        title: 'Users',
+        path: PATH_DASHBOARD.root,
+        icon: ICONS.user,
+        children: [
+          { title: 'Current Users', path: PATH_DASHBOARD.general.currentUsers },
+          {
+            title: 'Add a New User', path: PATH_DASHBOARD.general.addUser
+          },
+        ],
+      },
+      {
+        title: 'Articles',
+        path: PATH_DASHBOARD.root,
+        icon: ICONS.folder,
+        children: [
+          { title: 'Current Articles', path: PATH_DASHBOARD.general.currentArticles },
+          { title: 'Add a New Article', path: PATH_DASHBOARD.general.addArticles },
+        ],
+      },
       // { title: 'ecommerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
