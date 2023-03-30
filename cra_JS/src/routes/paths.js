@@ -43,10 +43,6 @@ export const PATH_DASHBOARD = {
   blank: path(ROOTS_DASHBOARD, '/blank'),
   general: {
     app: path(ROOTS_DASHBOARD, '/app'),
-    addUser: path(ROOTS_DASHBOARD, '/add-user'),
-    currentUsers: path(ROOTS_DASHBOARD, '/current-users'),
-    currentArticles: path(ROOTS_DASHBOARD, '/current-articles'),
-    addArticles: path(ROOTS_DASHBOARD, '/add-articles'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),
@@ -64,6 +60,8 @@ export const PATH_DASHBOARD = {
   },
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
+    addUser: path(ROOTS_DASHBOARD, '/user/add-user'),
+    currentUsers: path(ROOTS_DASHBOARD, '/user/current-users'),
     new: path(ROOTS_DASHBOARD, '/user/new'),
     list: path(ROOTS_DASHBOARD, '/user/list'),
     cards: path(ROOTS_DASHBOARD, '/user/cards'),
@@ -71,6 +69,11 @@ export const PATH_DASHBOARD = {
     account: path(ROOTS_DASHBOARD, '/user/account'),
     edit: (name) => path(ROOTS_DASHBOARD, `/user/${name}/edit`),
     demoEdit: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
+  },
+  articles: {
+    root: path(ROOTS_DASHBOARD, '/articles'),
+    currentArticles: path(ROOTS_DASHBOARD, '/articles/current-articles'),
+    addArticles: path(ROOTS_DASHBOARD, '/articles/add-articles'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

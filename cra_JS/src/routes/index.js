@@ -181,10 +181,6 @@ export default function Router() {
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralAppPage /> },
-        { path: 'add-user', element: <AddUserPage /> },
-        { path: 'current-articles', element: <CurrentArticlesPage /> },
-        { path: 'add-articles', element: <AddArticlesPage /> },
-        { path: 'current-users', element: <CurrentUsersPage /> },
         { path: 'ecommerce', element: <GeneralEcommercePage /> },
         { path: 'analytics', element: <GeneralAnalyticsPage /> },
         { path: 'banking', element: <GeneralBankingPage /> },
@@ -206,12 +202,22 @@ export default function Router() {
           path: 'user',
           children: [
             { element: <Navigate to="/dashboard/user/profile" replace />, index: true },
+            { path: 'add-user', element: <AddUserPage /> },
+            { path: 'current-users', element: <CurrentUsersPage /> },
             { path: 'profile', element: <UserProfilePage /> },
             { path: 'cards', element: <UserCardsPage /> },
             { path: 'list', element: <UserListPage /> },
             { path: 'new', element: <UserCreatePage /> },
             { path: ':name/edit', element: <UserEditPage /> },
             { path: 'account', element: <UserAccountPage /> },
+          ],
+        },
+        {
+          path: 'articles',
+          children: [
+            { element: <Navigate to="/dashboard/articles/current-articles" replace />, index: true },
+            { path: 'current-articles', element: <CurrentArticlesPage /> },
+            { path: 'add-articles', element: <AddArticlesPage /> },
           ],
         },
         {
@@ -264,7 +270,7 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         // { element: <HomePage />, index: true },
-        { element: <Navigate to="/auth/login" replace/>, index: true },
+        { element: <Navigate to="/auth/login" replace />, index: true },
         { path: 'about-us', element: <AboutPage /> },
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <FaqsPage /> },
