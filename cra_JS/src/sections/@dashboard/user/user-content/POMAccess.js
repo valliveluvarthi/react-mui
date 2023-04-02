@@ -76,6 +76,7 @@ export default function POMAccess() {
         setValue,
         handleSubmit,
         formState: { isSubmitting, isValid },
+        getValues,
     } = methods;
 
     const values = watch();
