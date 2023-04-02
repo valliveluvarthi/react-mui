@@ -5,29 +5,11 @@ import { Container, Grid, Stack, Button, Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
-// _mock_
-import {
-  _appFeatured,
-  _appAuthors,
-  _appInstalled,
-  _appRelated,
-  _appInvoices,
-} from '../../_mock/arrays';
+
 // components
 import { useSettingsContext } from '../../components/settings';
 // sections
-import {
-  AppWidget,
-  AppWelcome,
-  AppFeatured,
-  AppNewInvoice,
-  AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
-  AppWidgetSummary,
-  AppCurrentDownload,
-  AppTopInstalledCountries,
-} from '../../sections/@dashboard/general/app';
+
 import Iconify from '../../components/iconify';
 // assets
 import { SeoIllustration } from '../../assets/illustrations';

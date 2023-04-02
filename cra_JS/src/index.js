@@ -1,5 +1,4 @@
-// i18n
-import './locales/i18n';
+
 
 // scroll bar
 import 'simplebar/src/simplebar.css';
@@ -7,8 +6,6 @@ import 'simplebar/src/simplebar.css';
 // lightbox
 import 'react-image-lightbox/style.css';
 
-// map
-import './utils/mapboxgl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 // editor

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { createContext, useEffect, useContext, useMemo, useCallback } from 'react';
 // hooks
 import useLocalStorage from '../../hooks/useLocalStorage';
-//
 import { defaultSettings } from './config';
 import { defaultPreset, getPresets, presetsOption } from './presets';
 

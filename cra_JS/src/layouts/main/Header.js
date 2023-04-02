@@ -10,8 +10,6 @@ import useResponsive from '../../hooks/useResponsive';
 import { bgBlur } from '../../utils/cssStyles';
 // config
 import { HEADER } from '../../config';
-// routes
-import { PATH_DOCS, PATH_MINIMAL_ON_STORE } from '../../routes/paths';
 // components
 import Logo from '../../components/logo';
 import Label from '../../components/label';
@@ -55,17 +53,10 @@ export default function Header() {
         <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Logo />
 
-          <Link href={PATH_DOCS.changelog} target="_blank" rel="noopener" underline="none" sx={{ ml: 1 }}>
-            <Label color="info"> v4.0.0 </Label>
-          </Link>
-
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <NavDesktop isOffset={isOffset} data={navConfig} />}
 
-          <Button variant="contained" target="_blank" rel="noopener" href={PATH_MINIMAL_ON_STORE}>
-            Purchase Now
-          </Button>
 
           {!isDesktop && <NavMobile isOffset={isOffset} data={navConfig} />}
         </Container>
