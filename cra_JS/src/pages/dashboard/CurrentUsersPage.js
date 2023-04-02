@@ -59,7 +59,7 @@ export default function CurrentUsersPage() {
                   icon="material-symbols:edit-square-outline"
                   sx={{ cursor: 'pointer', mr: 1 }}
                   onClick={() => {
-                    dispatch(getUser(params.row));
+                    dispatch(getUser(params?.row));
                     navigate(PATH_DASHBOARD.user.editUser);
                   }}
                 />
@@ -67,7 +67,7 @@ export default function CurrentUsersPage() {
                   icon="ic:baseline-delete"
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
-                   dispatch(deleteUser(params.row.userID))
+                   dispatch(deleteUser(params?.row?.userID))
                   }}
                 />
               </>

@@ -8,7 +8,7 @@ import { PATH_DASHBOARD, PATH_AUTH } from '../../../routes/paths';
 import { useAuthContext } from '../../../auth/useAuthContext';
 // components
 import { CustomAvatar } from '../../../components/custom-avatar';
-
+import SettingsDrawer from '../../../components/settings/drawer/SettingsDrawer';
 import MenuPopover from '../../../components/menu-popover';
 
 // ----------------------------------------------------------------------
@@ -50,7 +50,7 @@ export default function AccountPopover() {
 
 
 
-  const [openPopover, setOpenPopover] = useState(null);
+  const [openPopover, setOpenPopover] = useState(false);
 
   const handleOpenPopover = (event) => {
     setOpenPopover(event.currentTarget);
@@ -114,26 +114,7 @@ export default function AccountPopover() {
       >
         <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />
       </StyledRoot>
-
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
-        <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
-          </Typography>
-
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?.email}
-          </Typography>
-        </Box>
-
-        <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          Logout
-        </MenuItem>
-      </MenuPopover>
+      <SettingsDrawer user={user?.displayName} email={user?.email}  open={openPopover} onClose={handleClosePopover} handleLogout={handleLogout} />
     </>
   );
 }

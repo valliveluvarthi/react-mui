@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // @mui
 import { alpha, useTheme } from '@mui/material/styles';
-import { Box, Divider, Drawer, Stack, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, Divider, Drawer, Stack, Typography, Tooltip, IconButton, Button } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // config
@@ -27,7 +27,7 @@ import ColorPresetsOptions from './ColorPresetsOptions';
 
 const SPACING = 2.5;
 
-export default function SettingsDrawer() {
+export default function SettingsDrawer(props) {
   const {
     themeMode,
     themeLayout,
@@ -60,12 +60,10 @@ export default function SettingsDrawer() {
 
   return (
     <>
-      {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />}
-
       <Drawer
         anchor="right"
-        open={open}
-        onClose={handleClose}
+        open={props.open}
+        onClose={props.onClose}
         BackdropProps={{ invisible: true }}
         PaperProps={{
           sx: {
@@ -100,12 +98,21 @@ export default function SettingsDrawer() {
             </Box>
           </Tooltip>
 
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={props.onClose}>
             <Iconify icon="eva:close-fill" />
           </IconButton>
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
+        <Box sx={{ my: 1.5, px: 2.5 }}>
+          <Typography variant="subtitle2" noWrap>
+            {props.user}
+          </Typography>
+
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {props.email}
+          </Typography>
+        </Box>
 
         <Scrollbar sx={{ p: SPACING, pb: 0 }}>
           <Block title="Mode">
@@ -119,6 +126,12 @@ export default function SettingsDrawer() {
           <Block title="Presets">
             <ColorPresetsOptions />
           </Block>
+
+          <Box sx={{ my: 1.5, px: 2.5 }} onClick={props.handleLogout}>
+            <Button variant='contained' fullWidth>
+              Logout
+            </Button>
+          </Box>
         </Scrollbar>
       </Drawer>
     </>
