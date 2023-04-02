@@ -203,6 +203,7 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/user/profile" replace />, index: true },
             { path: 'add-user', element: <AddUserPage /> },
+            { path: 'edit-user', element: <AddUserPage /> },
             { path: 'current-users', element: <CurrentUsersPage /> },
             { path: 'profile', element: <UserProfilePage /> },
             { path: 'cards', element: <UserCardsPage /> },
@@ -218,6 +219,7 @@ export default function Router() {
             { element: <Navigate to="/dashboard/articles/current-articles" replace />, index: true },
             { path: 'current-articles', element: <CurrentArticlesPage /> },
             { path: 'add-articles', element: <AddArticlesPage /> },
+            { path: 'edit-articles', element: <AddArticlesPage /> },
           ],
         },
         {
