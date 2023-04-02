@@ -83,7 +83,7 @@ export default function POMAccess() {
         try {
             if (currentUserID) {
                 const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = {...usersList[index]};
+                const currentObj = { ...usersList[index] };
                 currentObj.FDVAL = data.FDVAL;
                 currentObj.POACTION = data.POACTION;
                 currentObj.POASSIGN = data.POASSIGN;
@@ -128,27 +128,27 @@ export default function POMAccess() {
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Card sx={{ p: 2 }}>
 
-                    <FormControlLabel control={<Checkbox name="FDVAL" defaultChecked={user?.FDVAL} onChange={(event) => setValue("FDVAL", event.target.checked)} />} label="Floor & Decor PO Validation" sx={{ display: "block" }} />
-                    <FormControlLabel control={<Checkbox name="POACTION" defaultChecked={user?.POACTION} onChange={(event) => setValue("POACTION", event.target.checked)} />} label="POM PO Actions" sx={{ display: "block" }} />
-                    <FormControlLabel control={<Checkbox name="POASSIGN" defaultChecked={user?.POASSIGN} onChange={(event) => setValue("POASSIGN", event.target.checked)} />} label="POM Track Assignment Rules" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="FDVAL" checked={getValues("FDVAL")} onChange={(event) => setValue("FDVAL", event.target.checked)} />} label="Floor & Decor PO Validation" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POACTION" checked={getValues("POACTION")} onChange={(event) => setValue("POACTION", event.target.checked)} />} label="POM PO Actions" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POASSIGN" checked={getValues("POASSIGN")} onChange={(event) => setValue("POASSIGN", event.target.checked)} />} label="POM Track Assignment Rules" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POBOOK" defaultChecked={user?.POBOOK} onChange={(event) => setValue("POBOOK", event.target.checked)} />} label="POM Booking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POBOOK" checked={getValues("POBOOK")} onChange={(event) => setValue("POBOOK", event.target.checked)} />} label="POM Booking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POCONSIG" defaultChecked={user?.POCONSIG} onChange={(event) => setValue("POCONSIG", event.target.checked)} />} label="POM Consignee Maintenance" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POCONSIG" checked={getValues("POCONSIG")} onChange={(event) => setValue("POCONSIG", event.target.checked)} />} label="POM Consignee Maintenance" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POCONSOL" defaultChecked={user?.POCONSOL} onChange={(event) => setValue("POCONSOL", event.target.checked)} />} label="POM Consolidations" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POCONSOL" checked={getValues("POCONSOL")} onChange={(event) => setValue("POCONSOL", event.target.checked)} />} label="POM Consolidations" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="PODASH" defaultChecked={user?.PODASH} onChange={(event) => setValue("PODASH", event.target.checked)} />} label="POM PO Dashboards" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="PODASH" checked={getValues("PODASH")} onChange={(event) => setValue("PODASH", event.target.checked)} />} label="POM PO Dashboards" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POINQUIRE" defaultChecked={user?.POINQUIRE} onChange={(event) => setValue("POINQUIRE", event.target.checked)} />} label="POM Inquiry" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POINQUIRE" checked={getValues("POINQUIRE")} onChange={(event) => setValue("POINQUIRE", event.target.checked)} />} label="POM Inquiry" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POINQUIRE_CN" defaultChecked={user?.POINQUIRE_CN} onChange={(event) => setValue("POINQUIRE_CN", event.target.checked)} />} label="POM Inquiry CN" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POINQUIRE_CN" checked={getValues("POINQUIRE_CN")} onChange={(event) => setValue("POINQUIRE_CN", event.target.checked)} />} label="POM Inquiry CN" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POTRACK" defaultChecked={user?.POTRACK} onChange={(event) => setValue("POTRACK", event.target.checked)} />} label="POM Track Maintenance" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POTRACK" checked={getValues("POTRACK")} onChange={(event) => setValue("POTRACK", event.target.checked)} />} label="POM Track Maintenance" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POTRANSIT" defaultChecked={user?.POTRANSIT} onChange={(event) => setValue("POTRANSIT", event.target.checked)} />} label="POM Transit Time Rules Maintenance" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POTRANSIT" checked={getValues("POTRANSIT")} onChange={(event) => setValue("POTRANSIT", event.target.checked)} />} label="POM Transit Time Rules Maintenance" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="POVENDOR" defaultChecked={user?.POVENDOR} onChange={(event) => setValue("POVENDOR", event.target.checked)} />} label="POM Vendor Maintenance" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="POVENDOR" checked={getValues("POVENDOR")} onChange={(event) => setValue("POVENDOR", event.target.checked)} />} label="POM Vendor Maintenance" sx={{ display: "block" }} />
 
                     <Stack flexDirection={"row"} alignItems={"center"} justifyContent="flex-end" sx={{ mt: 2, mr: "2%" }}>
                         <LoadingButton type="submit" variant="contained" loading={isSubmitting}>

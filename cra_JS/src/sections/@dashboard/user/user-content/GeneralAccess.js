@@ -168,6 +168,7 @@ export default function GeneralAccess() {
         setValue,
         handleSubmit,
         formState: { isSubmitting, isValid },
+        getValues,
     } = methods;
 
     const values = watch();
@@ -282,89 +283,89 @@ export default function GeneralAccess() {
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Card sx={{ p: 2 }}>
 
-                    <FormControlLabel control={<Checkbox name="AGENTBOOK" defaultChecked={user?.AGENTBOOK} onChange={(event) => setValue("AGENTBOOK", event.target.checked)} />} label="Agent Booking" sx={{ display: "block" }} />
-                    <FormControlLabel control={<Checkbox name="AGENTTEMP" defaultChecked={user?.AGENTTEMP} onChange={(event) => setValue("AGENTBOOK", event.target.checked)} />} label="Agent Booking Templates" sx={{ display: "block" }} />
-                    <FormControlLabel control={<Checkbox name="AMAZFBA" defaultChecked={user?.AMAZFBA} onChange={(event) => setValue("AMAZFBA", event.target.checked)} />} label="Amazon FBA Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="AGENTBOOK" checked={getValues("AGENTBOOK")} onChange={(event) => setValue("AGENTBOOK", event.target.checked)} />} label="Agent Booking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="AGENTTEMP" checked={getValues("AGENTTEMP")} onChange={(event) => setValue("AGENTTEMP", event.target.checked)} />} label="Agent Booking Templates" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="AMAZFBA" checked={getValues("AMAZFBA")} onChange={(event) => setValue("AMAZFBA", event.target.checked)} />} label="Amazon FBA Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="ARSTMT" defaultChecked={user?.ARSTMT} onChange={(event) => setValue("ARSTMT", event.target.checked)} />} label=" A/R Statements " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="ARSTMT" checked={getValues("ARSTMT")} onChange={(event) => setValue("ARSTMT", event.target.checked)} />} label=" A/R Statements " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="BKAPPCN" defaultChecked={user?.BKAPPCN} onChange={(event) => setValue("BKAPPCN", event.target.checked)} />} label=" Booking Managment China " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="BKAPPCN" checked={getValues("BKAPPCN")} onChange={(event) => setValue("BKAPPCN", event.target.checked)} />} label=" Booking Managment China " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="BMM_NEW" defaultChecked={user?.BMM_NEW} onChange={(event) => setValue("BMM_NEW", event.target.checked)} />} label=" Booking Management " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="BMM_NEW" checked={getValues("BMM_NEW")} onChange={(event) => setValue("BMM_NEW", event.target.checked)} />} label=" Booking Management " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="BOOKACTION" defaultChecked={user?.BOOKACTION} onChange={(event) => setValue("BOOKACTION", event.target.checked)} />} label=" POM Booking Actions " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="BOOKACTION" checked={getValues("BOOKACTION")} onChange={(event) => setValue("BOOKACTION", event.target.checked)} />} label=" POM Booking Actions " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="BOOKAPP" defaultChecked={user?.BOOKAPP} onChange={(event) => setValue("BOOKAPP", event.target.checked)} />} label=" Booking Managment " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="BOOKAPP" checked={getValues("BOOKAPP")} onChange={(event) => setValue("BOOKAPP", event.target.checked)} />} label=" Booking Managment " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="CAM_BULK" defaultChecked={user?.CAM_BULK} onChange={(event) => setValue("CAM_BULK", event.target.checked)} />} label=" Bulk CAM Request Uploader " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="CAM_BULK" checked={getValues("CAM_BULK")} onChange={(event) => setValue("CAM_BULK", event.target.checked)} />} label=" Bulk CAM Request Uploader " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="CLASSAD" defaultChecked={user?.CLASSAD} onChange={(event) => setValue("CLASSAD", event.target.checked)} />} label=" Classification Advisory " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="CLASSAD" checked={getValues("CLASSAD")} onChange={(event) => setValue("CLASSAD", event.target.checked)} />} label=" Classification Advisory " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="CUSTPROF" defaultChecked={user?.CUSTPROF} onChange={(event) => setValue("CUSTPROF", event.target.checked)} />} label=" Customer Profile " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="CUSTPROF" checked={getValues("CUSTPROF")} onChange={(event) => setValue("CUSTPROF", event.target.checked)} />} label=" Customer Profile " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHCNFR" defaultChecked={user?.DASHCNFR} onChange={(event) => setValue("DASHCNFR", event.target.checked)} />} label=" Dashboard - Container Forecast " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHCNFR" checked={getValues("DASHCNFR")} onChange={(event) => setValue("DASHCNFR", event.target.checked)} />} label=" Dashboard - Container Forecast " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHCONT" defaultChecked={user?.DASHCONT} onChange={(event) => setValue("DASHCONT", event.target.checked)} />} label=" Dashboard Container" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHCONT" checked={getValues("DASHCONT")} onChange={(event) => setValue("DASHCONT", event.target.checked)} />} label=" Dashboard Container" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHDOAU" defaultChecked={user?.DASHDOAU} onChange={(event) => setValue("DASHDOAU", event.target.checked)} />} label=" Dashboard - Document Audit" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHDOAU" checked={getValues("DASHDOAU")} onChange={(event) => setValue("DASHDOAU", event.target.checked)} />} label=" Dashboard - Document Audit" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHMQC" defaultChecked={user?.DASHMQC} onChange={(event) => setValue("DASHMQC", event.target.checked)} />} label=" Dashboard - MQC" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHMQC" checked={getValues("DASHMQC")} onChange={(event) => setValue("DASHMQC", event.target.checked)} />} label=" Dashboard - MQC" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHORDT" defaultChecked={user?.DASHORDT} onChange={(event) => setValue("DASHORDT", event.target.checked)} />} label=" Dashboard - Origin/Destination" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHORDT" checked={getValues("DASHORDT")} onChange={(event) => setValue("DASHORDT", event.target.checked)} />} label=" Dashboard - Origin/Destination" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHPOM" defaultChecked={user?.DASHPOM} onChange={(event) => setValue("DASHPOM", event.target.checked)} />} label=" Dashboard - POM" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHPOM" checked={getValues("DASHPOM")} onChange={(event) => setValue("DASHPOM", event.target.checked)} />} label=" Dashboard - POM" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHSHIP" defaultChecked={user?.DASHSHIP} onChange={(event) => setValue("DASHSHIP", event.target.checked)} />} label=" Shipment Dashboards" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHSHIP" checked={getValues("DASHSHIP")} onChange={(event) => setValue("DASHSHIP", event.target.checked)} />} label=" Shipment Dashboards" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHTEST" defaultChecked={user?.DASHTEST} onChange={(event) => setValue("DASHTEST", event.target.checked)} />} label=" Dashboard Test" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHTEST" checked={getValues("DASHTEST")} onChange={(event) => setValue("DASHTEST", event.target.checked)} />} label=" Dashboard Test" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="DASHTRAN" defaultChecked={user?.DASHTRAN} onChange={(event) => setValue("DASHTRAN", event.target.checked)} />} label=" Transit Time Dashboard" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="DASHTRAN" checked={getValues("DASHTRAN")} onChange={(event) => setValue("DASHTRAN", event.target.checked)} />} label=" Transit Time Dashboard" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="EDASH" defaultChecked={user?.EDASH} onChange={(event) => setValue("EDASH", event.target.checked)} />} label=" Entry Dashboards" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="EDASH" checked={getValues("EDASH")} onChange={(event) => setValue("EDASH", event.target.checked)} />} label=" Entry Dashboards" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="EXPBOOK" defaultChecked={user?.EXPBOOK} onChange={(event) => setValue("EXPBOOK", event.target.checked)} />} label=" Export Booking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="EXPBOOK" checked={getValues("EXPBOOK")} onChange={(event) => setValue("EXPBOOK", event.target.checked)} />} label=" Export Booking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="EXPLIC" defaultChecked={user?.EXPLIC} onChange={(event) => setValue("EXPLIC", event.target.checked)} />} label=" Export License Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="EXPLIC" checked={getValues("EXPLIC")} onChange={(event) => setValue("EXPLIC", event.target.checked)} />} label=" Export License Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="EXPTEMPL" defaultChecked={user?.EXPTEMPL} onChange={(event) => setValue("EXPTEMPL", event.target.checked)} />} label=" Export Templates" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="EXPTEMPL" checked={getValues("EXPTEMPL")} onChange={(event) => setValue("EXPTEMPL", event.target.checked)} />} label=" Export Templates" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="EXPTRACK" defaultChecked={user?.EXPTRACK} onChange={(event) => setValue("EXPTRACK", event.target.checked)} />} label=" Export Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="EXPTRACK" checked={getValues("EXPTRACK")} onChange={(event) => setValue("EXPTRACK", event.target.checked)} />} label=" Export Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="IMPPER" defaultChecked={user?.IMPPER} onChange={(event) => setValue("IMPPER", event.target.checked)} />} label=" Import Permit Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="IMPPER" checked={getValues("IMPPER")} onChange={(event) => setValue("IMPPER", event.target.checked)} />} label=" Import Permit Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="ISFPORTAL" defaultChecked={user?.ISFPORTAL} onChange={(event) => setValue("ISFPORTAL", event.target.checked)} />} label=" ISF Filing Portal" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="ISFPORTAL" checked={getValues("ISFPORTAL")} onChange={(event) => setValue("ISFPORTAL", event.target.checked)} />} label=" ISF Filing Portal" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="ISFTEMPL" defaultChecked={user?.ISFTEMPL} onChange={(event) => setValue("ISFTEMPL", event.target.checked)} />} label=" ISF Templates" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="ISFTEMPL" checked={getValues("ISFTEMPL")} onChange={(event) => setValue("ISFTEMPL", event.target.checked)} />} label=" ISF Templates" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="IT" defaultChecked={user?.IT} onChange={(event) => setValue("IT", event.target.checked)} />} label=" Import Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="IT" checked={getValues("IT")} onChange={(event) => setValue("IT", event.target.checked)} />} label=" Import Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="IT_CN" defaultChecked={user?.IT_CN} onChange={(event) => setValue("IT_CN", event.target.checked)} />} label=" Import Tracking CN" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="IT_CN" checked={getValues("IT_CN")} onChange={(event) => setValue("IT_CN", event.target.checked)} />} label=" Import Tracking CN" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="LANDCOST" defaultChecked={user?.LANDCOST} onChange={(event) => setValue("LANDCOST", event.target.checked)} />} label=" Landed Cost" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="LANDCOST" checked={getValues("LANDCOST")} onChange={(event) => setValue("LANDCOST", event.target.checked)} />} label=" Landed Cost" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="ONLINEPAY" defaultChecked={user?.ONLINEPAY} onChange={(event) => setValue("ONLINEPAY", event.target.checked)} />} label=" On-Line Payment" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="ONLINEPAY" checked={getValues("ONLINEPAY")} onChange={(event) => setValue("ONLINEPAY", event.target.checked)} />} label=" On-Line Payment" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="PARTS" defaultChecked={user?.PARTS} onChange={(event) => setValue("PARTS", event.target.checked)} />} label=" Parts Table" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="PARTS" checked={getValues("PARTS")} onChange={(event) => setValue("PARTS", event.target.checked)} />} label=" Parts Table" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="QUOTE" defaultChecked={user?.QUOTE} onChange={(event) => setValue("QUOTE", event.target.checked)} />} label=" Quote Book" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="QUOTE" checked={getValues("QUOTE")} onChange={(event) => setValue("QUOTE", event.target.checked)} />} label=" Quote Book" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="REPORT" defaultChecked={user?.REPORT} onChange={(event) => setValue("REPORT", event.target.checked)} />} label=" Reports" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="REPORT" checked={getValues("REPORT")} onChange={(event) => setValue("REPORT", event.target.checked)} />} label=" Reports" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="SAILADMIN" defaultChecked={user?.SAILADMIN} onChange={(event) => setValue("SAILADMIN", event.target.checked)} />} label=" Sailing Schedule Maintenace" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="SAILADMIN" checked={getValues("SAILADMIN")} onChange={(event) => setValue("SAILADMIN", event.target.checked)} />} label=" Sailing Schedule Maintenace" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="SELECTSAIL" defaultChecked={user?.SELECTSAIL} onChange={(event) => setValue("SELECTSAIL", event.target.checked)} />} label=" Select Sail Schedule " sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="SELECTSAIL" checked={getValues("SELECTSAIL")} onChange={(event) => setValue("SELECTSAIL", event.target.checked)} />} label=" Select Sail Schedule " sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="SHIPTRACK" defaultChecked={user?.SHIPTRACK} onChange={(event) => setValue("SHIPTRACK", event.target.checked)} />} label=" Shipment Tracking" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="SHIPTRACK" checked={getValues("SHIPTRACK")} onChange={(event) => setValue("SHIPTRACK", event.target.checked)} />} label=" Shipment Tracking" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="SNAPSHOT" defaultChecked={user?.SNAPSHOT} onChange={(event) => setValue("SNAPSHOT", event.target.checked)} />} label=" Snapshot" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="SNAPSHOT" checked={getValues("SNAPSHOT")} onChange={(event) => setValue("SNAPSHOT", event.target.checked)} />} label=" Snapshot" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="TRANDASH" defaultChecked={user?.TRANDASH} onChange={(event) => setValue("TRANDASH", event.target.checked)} />} label=" Transportation Dashboards" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="TRANDASH" checked={getValues("TRANDASH")} onChange={(event) => setValue("TRANDASH", event.target.checked)} />} label=" Transportation Dashboards" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="TRUCKPORT" defaultChecked={user?.TRUCKPORT} onChange={(event) => setValue("TRUCKPORT", event.target.checked)} />} label=" Trucker Portal" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="TRUCKPORT" checked={getValues("TRUCKPORT")} onChange={(event) => setValue("TRUCKPORT", event.target.checked)} />} label=" Trucker Portal" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="USP" defaultChecked={user?.USP} onChange={(event) => setValue("USP", event.target.checked)} />} label=" Parts Table" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="USP" checked={getValues("USP")} onChange={(event) => setValue("USP", event.target.checked)} />} label=" Parts Table" sx={{ display: "block" }} />
 
-                    <FormControlLabel control={<Checkbox name="WAREWITH" defaultChecked={user?.WAREWITH} onChange={(event) => setValue("WAREWITH", event.target.checked)} />} label=" Warehouse Withdrawals" sx={{ display: "block" }} />
+                    <FormControlLabel control={<Checkbox name="WAREWITH" checked={getValues("WAREWITH")} onChange={(event) => setValue("WAREWITH", event.target.checked)} />} label=" Warehouse Withdrawals" sx={{ display: "block" }} />
 
 
 

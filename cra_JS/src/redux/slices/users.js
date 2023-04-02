@@ -9,7 +9,76 @@ import { dispatch } from '../store';
 const initialState = {
   isLoading: false,
   error: null,
-  user: {},
+  user: {
+    userID: null, userLogin: '', emailAddress: '', programsToAccess: 0,
+    usStatsCustAllowed: "",
+    chargeCust: "",
+    usExceptionCodes: "",
+    usPartsCustNo: "",
+    accountTeamMail: "",
+    usScannedDocsCustNo: "",
+    exportStatsCustNoAllowed: "",
+    exportBookingTemplateCustNo: "",
+    exportBookingNotifyEmailAddress: "",
+    ISFCustNo: "",
+    ISFBranch: "",
+    ISFDepartment: "",
+    AGENTBOOK: false,
+    AGENTTEMP: false,
+    AMAZFBA: false,
+    ARSTMT: false,
+    BKAPPCN: false,
+    BMM_NEW: false,
+    BOOKACTION: false,
+    BOOKAPP: false,
+    CAM_BULK: false,
+    CLASSAD: false,
+    CUSTPROF: false,
+    DASHCNFR: false,
+    DASHCONT: false,
+    DASHDOAU: false,
+    DASHMQC: false,
+    DASHORDT: false,
+    DASHPOM: false,
+    DASHSHIP: false,
+    DASHTEST: false,
+    DASHTRAN: false,
+    EDASH: false,
+    EXPBOOK: false,
+    EXPLIC: false,
+    EXPTEMPL: false,
+    EXPTRACK: false,
+    IMPPER: false,
+    ISFPORTAL: false,
+    ISFTEMPL: false,
+    IT: false,
+    IT_CN: false,
+    LANDCOST: false,
+    ONLINEPAY: false,
+    PARTS: false,
+    QUOTE: false,
+    REPORT: false,
+    SAILADMIN: false,
+    SELECTSAIL: false,
+    SHIPTRACK: false,
+    SNAPSHOT: false,
+    TRANDASH: false,
+    TRUCKPORT: false,
+    USP: false,
+    WAREWITH: false,
+    FDVAL: false,
+    POACTION: false,
+    POASSIGN: false,
+    POBOOK: false,
+    POCONSIG: false,
+    POCONSOL: false,
+    PODASH: false,
+    POINQUIRE: false,
+    POINQUIRE_CN: false,
+    POTRACK: false,
+    POTRANSIT: false,
+    POVENDOR: false,
+  },
   currentUserID : null, 
   usersList: [
     {
@@ -740,6 +809,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.usersList.push(action.payload);
       state.currentUserID = action.payload.userID;
+      state.user = initialState.user;
     },
     updateUserSuccess(state, action) {
       state.isLoading = false;
@@ -748,6 +818,7 @@ const slice = createSlice({
         state.usersList.splice(index, 1);
       }
       state.usersList.push(action.payload);
+      state.user = initialState.user;
     },
     deleteUserSuccess(state, action) {
       state.isLoading = false;
