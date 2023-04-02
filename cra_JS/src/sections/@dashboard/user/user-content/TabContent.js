@@ -14,107 +14,56 @@ import POMAccess from './POMAccess';
 
 
 
-TabContent.propTypes = {
-
-    passCurrentTab: PropTypes.func,
-
-    variant: PropTypes.any,
-
-};
+TabContent.propTypes = {};
 
 
 
 
-export default function TabContent({ passCurrentTab, variant }) {
-
+export default function TabContent() {
     const [currentTab, setCurrentTab] = useState('Web Login Fields');
-
     const [TABS, setTabs] = useState([]);
-
-
-
-
     useEffect(() => {
-
         const TABS = [
-
             {
-
                 value: 'General',
                 component: <General />,
                 label: 'General',
-
             },
-
             {
-
                 value: 'Web Login Fields',
                 component: <WebLoginFields />,
                 label: 'Web Login Fields',
-
             },
-
             {
-
                 value: 'General Access',
                 component: <GeneralAccess />,
                 label: 'General Access',
-
             },
-
             {
-
                 value: 'POM Access',
                 component: <POMAccess />,
                 label: 'POM Access',
-
             },
-
         ];
-
         setTabs(TABS);
-
-    }, [variant]);
-
-
-
-
+    }, []);
     return (
-
         <>
-
             <Box sx={{ pl: 1, fontSize: '14px' }}>
-
                 <Tabs
-
                     value={currentTab}
-
                     onChange={(event, newValue) => {
-
                         setCurrentTab(newValue);
-
-                        passCurrentTab(newValue);
-
                     }}
-
                     sx={{
-
                         px: 3,
-
                         '&.MuiTabs-root': {
-
                             p: 0,
-
                         },
-
                     }}
-
                 >
-
                     {TABS.map((tab) => (
-
                         <Tab key={tab.value} value={tab.value} label={tab.label} />
-
                     ))}
                 </Tabs>
                 {TABS.map(
@@ -125,11 +74,8 @@ export default function TabContent({ passCurrentTab, variant }) {
                             </Box>
                         )
                 )}
-
             </Box>
-
         </>
-
     );
 
 }

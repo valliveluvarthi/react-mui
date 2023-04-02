@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Grid, Card, Stack } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
+import { useLocation } from 'react-router-dom';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -12,11 +13,33 @@ import { useSettingsContext } from '../../../../components/settings';
 import FormProvider, {
     RHFTextField,
 } from '../../../../components/hook-form';
+// redux
+import { useDispatch, useSelector } from '../../../../redux/store';
+import { postUser, updateUser } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
 export default function WebLoginFields() {
     const { themeStretch } = useSettingsContext();
+    const dispatch = useDispatch();
+    const { user, usersList, currentUserID } = useSelector((state) => state.user);
+    const location = useLocation();
+    useEffect(() => {
+        if(user && Object.keys(user)?.length > 0){
+            setValue("usStatsCustAllowed",user.usStatsCustAllowed);
+            setValue("chargeCust",user.chargeCust);
+            setValue("usExceptionCodes",user.usExceptionCodes);
+            setValue("usPartsCustNo",user.usPartsCustNo);
+            setValue("accountTeamMail",user.accountTeamMail);
+            setValue("usScannedDocsCustNo",user.usScannedDocsCustNo);
+            setValue("exportStatsCustNoAllowed",user.exportStatsCustNoAllowed);
+            setValue("exportBookingTemplateCustNo",user.exportBookingTemplateCustNo);
+            setValue("exportBookingNotifyEmailAddress",user.exportBookingNotifyEmailAddress);
+            setValue("ISFCustNo",user.ISFCustNo);
+            setValue("ISFBranch",user.ISFBranch);
+            setValue("ISFDepartment",user.ISFDepartment);
+        }
+      }, [user]);
     const WebLoginFormSchema = Yup.object().shape({
         usStatsCustAllowed: Yup.string(),
         chargeCust: Yup.string(),
@@ -31,6 +54,7 @@ export default function WebLoginFields() {
         ISFBranch: Yup.string(),
         ISFDepartment: Yup.string(),
     });
+
     const defaultValues = {
         usStatsCustAllowed: "",
         chargeCust: "",
@@ -61,7 +85,40 @@ export default function WebLoginFields() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            console.log(data);
+            if(currentUserID){
+                const index = usersList?.findIndex((col) => col.userID === currentUserID);
+                const currentObj = {...usersList[index]};
+                currentObj.usStatsCustAllowed = data.usStatsCustAllowed;
+                currentObj.chargeCust = data.chargeCust;
+                currentObj.usExceptionCodes = data.usExceptionCodes;
+                currentObj.usPartsCustNo = data.usPartsCustNo;
+                currentObj.accountTeamMail = data.accountTeamMail;
+                currentObj.usScannedDocsCustNo = data.usScannedDocsCustNo;
+                currentObj.exportStatsCustNoAllowed = data.exportStatsCustNoAllowed;
+                currentObj.exportBookingTemplateCustNo = data.exportBookingTemplateCustNo;
+                currentObj.exportBookingNotifyEmailAddress = data.exportBookingNotifyEmailAddress;
+                currentObj.ISFCustNo = data.ISFCustNo;
+                currentObj.ISFBranch = data.ISFBranch;
+                currentObj.ISFDepartment = data.ISFDepartment;
+                console.log(currentObj);
+                dispatch(updateUser(currentObj));
+            }else{
+                dispatch(postUser({
+                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`, emailAddress: `user${usersList.length + 1}@gmail.com`, programsToAccess: 35,
+                    usStatsCustAllowed: data.usStatsCustAllowed,
+                    chargeCust: data.chargeCust,
+                    usExceptionCodes: data.usExceptionCodes,
+                    usPartsCustNo: data.usPartsCustNo,
+                    accountTeamMail: data.accountTeamMail,
+                    usScannedDocsCustNo: data.usScannedDocsCustNo,
+                    exportStatsCustNoAllowed: data.exportStatsCustNoAllowed,
+                    exportBookingTemplateCustNo: data.exportBookingTemplateCustNo,
+                    exportBookingNotifyEmailAddress: data.exportBookingNotifyEmailAddress,
+                    ISFCustNo: data.ISFCustNo,
+                    ISFBranch: data.ISFBranch,
+                    ISFDepartment: data.ISFDepartment,
+               }));
+            }
             reset();
         } catch (error) {
             console.error(error);
@@ -85,7 +142,8 @@ export default function WebLoginFields() {
                                 '& .MuiOutlinedInput-input': {
                                     padding: 1,
                                 },
-                            }} />
+                            }}
+                            />
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Charge Cust </Typography>
