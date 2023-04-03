@@ -4,7 +4,7 @@ import { Container, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 // components
 import { useSettingsContext } from '../../components/settings';
-
+import { AddArticleContent } from '../../sections/@dashboard/articles';
 // ----------------------------------------------------------------------
 export default function AddArticlesPage() {
   const { themeStretch } = useSettingsContext();
@@ -18,6 +18,7 @@ export default function AddArticlesPage() {
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h6"> {(location.pathname.includes("add-articles")) ? "Add " : "Edit "} Article </Typography>
       </Container>
+      <AddArticleContent />
     </>
   );
 }
