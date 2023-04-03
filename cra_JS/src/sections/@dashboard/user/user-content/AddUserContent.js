@@ -18,7 +18,7 @@ export default function AddUserContent() {
     useEffect(() => {
         if (location.pathname.includes("add")) {
             dispatch(clearUser({
-                userID: null, userLogin: '', emailAddress: '', programsToAccess: 0,
+                userID: "", userLogin: '', emailAddress: '',password : "", programsToAccess: 0,
                 usStatsCustAllowed: "",
                 chargeCust: "",
                 usExceptionCodes: "",

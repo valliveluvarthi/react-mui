@@ -39,61 +39,61 @@ const columns = [
     editable: true,
     align: 'left',
   },  
-  {
+  // {
 
-    field: 'actions',
+  //   field: 'actions',
 
-    headerName: 'Actions',
+  //   headerName: 'Actions',
 
-    width: 150,
+  //   width: 150,
 
-    align: 'left',
+  //   align: 'left',
 
-    renderCell: (params) => {
+  //   renderCell: (params) => {
 
-      const element = (
+  //     const element = (
 
-        <>
+  //       <>
 
-          <Stack flexDirection={'row'} alignItems="center">
-
-
+  //         <Stack flexDirection={'row'} alignItems="center">
 
 
 
-            <>
-
-              <Iconify
-
-                icon="material-symbols:edit-square-outline"
-
-                sx={{ cursor: 'pointer', mr: 1 }}
-
-              />
-
-              <Iconify
-
-                icon="ic:baseline-delete"
-
-                sx={{ cursor: 'pointer' }}
-
-              />
-
-            </>
 
 
+  //           <>
 
-          </Stack>
+  //             <Iconify
 
-        </>
+  //               icon="material-symbols:edit-square-outline"
 
-      );
+  //               sx={{ cursor: 'pointer', mr: 1 }}
 
-      return element;
+  //             />
 
-    },
+  //             <Iconify
 
-  },
+  //               icon="ic:baseline-delete"
+
+  //               sx={{ cursor: 'pointer' }}
+
+  //             />
+
+  //           </>
+
+
+
+  //         </Stack>
+
+  //       </>
+
+  //     );
+
+  //     return element;
+
+  //   },
+
+  // },
 ];
 
 const rows = [

@@ -224,7 +224,9 @@ export default function GeneralAccess() {
                 dispatch(updateUser(currentObj));
             }else{
                 dispatch(postUser({
-                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`, emailAddress: `user${usersList.length + 1}@gmail.com`, programsToAccess: 35,
+                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`, emailAddress: `user${usersList.length + 1}@gmail.com`,
+                    password : `Shapiro@2023`,
+                    programsToAccess: 35,
                     AGENTBOOK: data.AGENTBOOK,
                     AGENTTEMP: data.AGENTTEMP,
                     AMAZFBA: data.AMAZFBA,

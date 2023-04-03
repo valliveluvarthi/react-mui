@@ -20,7 +20,7 @@ TabContent.propTypes = {};
 
 
 export default function TabContent() {
-    const [currentTab, setCurrentTab] = useState('Web Login Fields');
+    const [currentTab, setCurrentTab] = useState('General');
     const [TABS, setTabs] = useState([]);
     useEffect(() => {
         const TABS = [

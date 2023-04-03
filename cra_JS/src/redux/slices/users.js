@@ -10,7 +10,8 @@ const initialState = {
   isLoading: false,
   error: null,
   user: {
-    userID: null, userLogin: '', emailAddress: '', programsToAccess: 0,
+    userID: "", userLogin: '',
+    password : "", emailAddress: '', programsToAccess: 0,
     usStatsCustAllowed: "",
     chargeCust: "",
     usExceptionCodes: "",
