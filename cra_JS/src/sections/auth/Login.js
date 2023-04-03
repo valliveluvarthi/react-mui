@@ -18,9 +18,9 @@ export default function Login() {
 
   return (
     <LoginLayout>
-      <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
+      {/* <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
         <Typography variant="h4" sx={{textAlign : "center"}}>User Sign In</Typography>
-      </Stack>
+      </Stack> */}
       <AuthLoginForm />
     </LoginLayout>
   );

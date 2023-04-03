@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Box } from '@mui/material';
 // components
 import Logo from '../../components/logo';
 //
@@ -17,24 +17,28 @@ LoginLayout.propTypes = {
 export default function LoginLayout({ children, illustration, title }) {
   return (
     <StyledRoot>
-      {/* <Logo
-        sx={{
-          zIndex: 9,
-          position: 'absolute',
-          mt: { xs: 1.5, md: 5 },
-          ml: { xs: 2, md: 5 },
-        }}
-      /> */}
-
       <StyledSection>
-        <Typography variant="h3" sx={{ mb: 10, maxWidth: 480, textAlign: 'center' }}>
-          {title || 'Hi, Welcome back'}
-        </Typography>
-
         <StyledSectionBg />
       </StyledSection>
 
       <StyledContent>
+      <Box
+          component="div"
+          sx={{
+            width: 330,
+            height: 80,
+            display: 'inline-flex',
+          }}
+        >
+          <img
+            src={`https://shapiro360.shapiro.com/templates/rt_metamorph/images/shapiro/Shapiro_360_Logo.png`}
+            alt={"Shapiro 360"}
+            loading="lazy"
+          />
+        </Box>
+        <Typography variant="h4" sx={{ ml:"-20%" ,mb: 10, maxWidth: 480, textAlign: 'center' }}>
+          {title || 'Tech Zombies'}
+        </Typography>
         <Stack sx={{ width: 1 }}> {children} </Stack>
       </StyledContent>
     </StyledRoot>
