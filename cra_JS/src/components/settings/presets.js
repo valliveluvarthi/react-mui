@@ -54,11 +54,11 @@ export const presets = [
   // RED
   {
     name: 'red',
-    lighter: '#FFE3D5',
-    light: '#FFC1AC',
-    main: '#FF3030',
-    dark: '#B71833',
-    darker: '#7A0930',
+    lighter: '#E30682',
+    light: '#CF0576',
+    main: '#9E035A',
+    dark: '#780345',
+    darker: '#5F0236',
     contrastText: '#FFFFFF',
   },
 ];
