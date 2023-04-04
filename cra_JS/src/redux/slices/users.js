@@ -421,9 +421,9 @@ const slice = createSlice({
     },
     postUserSuccess(state, action) {
       state.isLoading = false;
-      state.usersList.push(action.payload);
+      state.usersAPIList.push(action.payload);
       state.currentuserId = action.payload.userId;
-      state.user = initialState.user;
+      // state.user = initialState.user;
     },
     updateUserSuccess(state, action) {
       state.isLoading = false;
@@ -432,7 +432,7 @@ const slice = createSlice({
         state.usersAPIList.splice(index, 1);
       }
       state.usersAPIList.push(action.payload);
-      state.user = initialState.user;
+      // state.user = initialState.user;
     },
     deleteUserSuccess(state, action) {
       state.isLoading = false;
@@ -445,6 +445,7 @@ const slice = createSlice({
     getUsersAPISuccess(state, action) {
       state.isLoading = false;
       state.usersAPIList = action.payload;
+      state.currentuserId = action.payload[action.payload.length - 1].id;
     },
     postUsersAPISuccess(state, action) {
 

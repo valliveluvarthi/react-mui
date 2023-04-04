@@ -13,7 +13,7 @@ import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
@@ -115,6 +115,9 @@ export default function GeneralAccess() {
             setValue("WAREWITH", user?.WAREWITH);
         }
     }, [user]);
+    useEffect(() => {
+        dispatch(getUsersAPI());
+     }, []);
     const GeneralAccessFormSchema = Yup.object().shape({
         AGENTBOOK: Yup.bool(),
         AGENTTEMP: Yup.bool(),
@@ -223,7 +226,8 @@ export default function GeneralAccess() {
     const onSubmit = async (data) => {
         try {
             if (currentuserId) {
-                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId || col.userId === currentuserId);
+                if (index > 0 || index === 0) {
                 const currentObj = { ...usersAPIList[index] };
                 currentObj.AGENTBOOK = data.AGENTBOOK;
                 currentObj.AGENTTEMP = data.AGENTTEMP;
@@ -280,15 +284,18 @@ export default function GeneralAccess() {
                 const currentObjAPICopy = { ...usersAPIList[index] };
                 currentObjAPICopy.programsToAccess = filteredString;
                 if(currentObjAPICopy === null){
-                    currentObjAPICopy.pomRoles = "";
+                    currentObjAPICopy.pomRoles = "FDVAL";
                 }
                 // dispatch(updateUser(currentObj));
                 dispatch(updateUser(currentObjAPICopy));
                 dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+            }
             } else {
                 alert("Add General Tab Data");
             }
-            reset();
+            if(location.pathname.includes("add")){
+                reset();
+            }
         } catch (error) {
             console.error(error);
         }

@@ -15,7 +15,7 @@ import FormProvider, {
 } from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
@@ -42,6 +42,9 @@ export default function WebLoginFields() {
             // setValue("ISFDepartment", user.ISFDepartment);
         }
     }, [user]);
+    useEffect(() => {
+        dispatch(getUsersAPI());
+     }, []);
     const WebLoginFormSchema = Yup.object().shape({
         // usStatsCustAllowed: Yup.string(),
         custNoAllowed: Yup.string(),
@@ -93,7 +96,8 @@ export default function WebLoginFields() {
     const onSubmit = async (data) => {
         try {
             if (currentuserId) {
-                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId || col.userId === currentuserId);
+                if (index > 0 || index === 0) {
                 const currentObj = { ...usersAPIList[index] };
                 currentObj.custNoAllowed = data.custNoAllowed;
                 currentObj.chargeCustAllowed = data.chargeCustAllowed;
@@ -109,14 +113,23 @@ export default function WebLoginFields() {
                 // currentObj.ISFCustNo = data.ISFCustNo;
                 // currentObj.ISFBranch = data.ISFBranch;
                 // currentObj.ISFDepartment = data.ISFDepartment;
+                if(currentObj?.pomRoles === null){
+                    currentObj.pomRoles = "FDVAL";
+                }
+                if(currentObj?.programsToAccess === null){
+                    currentObj.programsToAccess = "AGENTBOOK";
+                }
                 console.log(currentObj);
                 dispatch(updateUser(currentObj));
                 dispatch(putUsersAPI(currentuserId, currentObj));
+                }
             } 
             else {
                 alert("Add General Tab Data");
             }
-            reset();
+            if(location.pathname.includes("add")){
+                reset();
+            }
         } catch (error) {
             console.error(error);
         }

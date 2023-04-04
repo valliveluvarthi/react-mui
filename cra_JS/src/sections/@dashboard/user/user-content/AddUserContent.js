@@ -20,7 +20,7 @@ export default function AddUserContent() {
             dispatch(clearUser({
                 userId: "", userLogin: '',
                 confirmPassword: "",
-                password: "", email: '', programsToAccess: 0,
+                password: "", email: '',
                 firstName: "",
                 lastName: "",
                 role: "",

@@ -16,13 +16,13 @@ import FormProvider, {
 import Iconify from '../../../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser, postUsersAPI, putUsersAPI } from '../../../../redux/slices/users';
+import { postUser, updateUser, postUsersAPI, putUsersAPI,getUsersAPI } from '../../../../redux/slices/users';
 
 // ----------------------------------------------------------------------
 export default function General() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList, currentuserId } = useSelector((state) => state.user);
+    const { user, usersList,usersAPIList, currentuserId } = useSelector((state) => state.user);
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     useEffect(() => {
@@ -38,6 +38,9 @@ export default function General() {
             setValue("title", user.title);
         }
     }, [user]);
+    useEffect(() => {
+       dispatch(getUsersAPI());
+    }, []);
     const WebLoginFormSchema = Yup.object().shape({
         userId: Yup.string().required(),
         email: Yup.string().required(),
@@ -59,7 +62,7 @@ export default function General() {
         lastName: "",
         role: "",
         userLogin: "",
-        title : "",
+        title: "",
     };
     const methods = useForm({
         resolver: yupResolver(WebLoginFormSchema),
@@ -77,20 +80,22 @@ export default function General() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if (currentuserId) {
-                const index = usersList?.findIndex((col) => col.userId === currentuserId);
-                const currentObj = { ...usersList[index] };
-                currentObj.userId = data.userId;
-                currentObj.email = data.email;
-                currentObj.firstName = data.firstName;
-                currentObj.lastName = data.lastName;
-                currentObj.role = data.role;
-                currentObj.userLogin = data.userLogin;
-                currentObj.title = data.title;
+            if (currentuserId && location.pathname.includes("edit")) {
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId || col.userId === currentuserId);
+                if (index > 0 || index === 0) {
+                    const currentObj = { ...usersAPIList[index] };
+                    currentObj.userId = data.userId;
+                    currentObj.email = data.email;
+                    currentObj.firstName = data.firstName;
+                    currentObj.lastName = data.lastName;
+                    currentObj.role = data.role;
+                    currentObj.userLogin = data.userLogin;
+                    currentObj.title = data.title;
 
-                console.log(currentObj);
-                dispatch(updateUser(currentObj));
-                dispatch(putUsersAPI(currentuserId,currentObj));
+                    console.log(currentObj);
+                    dispatch(updateUser(currentObj));
+                    dispatch(putUsersAPI(currentuserId, currentObj));
+                }
             } else {
                 dispatch(postUser({
                     userId: data.userId,
@@ -115,7 +120,9 @@ export default function General() {
                     title: data.title,
                 }))
             }
-            reset();
+            if(location.pathname.includes("add")){
+                reset();
+            }
         } catch (error) {
             console.error(error);
         }

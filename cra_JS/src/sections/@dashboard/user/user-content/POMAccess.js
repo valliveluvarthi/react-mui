@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
+import { useLocation } from 'react-router-dom';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -12,7 +13,7 @@ import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redux/slices/users';
 
 
 
@@ -20,6 +21,7 @@ import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/user
 export default function POMAccess() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
+    const location = useLocation();
     const { user, usersList, usersAPIList, currentuserId } = useSelector((state) => state.user);
     useEffect(() => {
         const hasKey = 'pomRoles' in user;
@@ -52,6 +54,9 @@ export default function POMAccess() {
             setValue("POVENDOR", user?.POVENDOR);
         }
     }, [user]);
+    useEffect(() => {
+        dispatch(getUsersAPI());
+    }, []);
     const POMAccessFormSchema = Yup.object().shape({
         FDVAL: Yup.bool(),
         POACTION: Yup.bool(),
@@ -98,37 +103,41 @@ export default function POMAccess() {
     const onSubmit = async (data) => {
         try {
             if (currentuserId) {
-                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
-                const currentObj = { ...usersAPIList[index] };
-                currentObj.FDVAL = data.FDVAL;
-                currentObj.POACTION = data.POACTION;
-                currentObj.POASSIGN = data.POASSIGN;
-                currentObj.POBOOK = data.POBOOK;
-                currentObj.POCONSIG = data.POCONSIG;
-                currentObj.POCONSOL = data.POCONSOL;
-                currentObj.PODASH = data.PODASH;
-                currentObj.POINQUIRE = data.POINQUIRE;
-                currentObj.POINQUIRE_CN = data.POINQUIRE_CN;
-                currentObj.POTRACK = data.POTRACK;
-                currentObj.POTRANSIT = data.POTRANSIT;
-                currentObj.POVENDOR = data.POVENDOR;
-                console.log(currentObj);
-                const keys = Object.keys(data);
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId || col.userId === currentuserId);
+                if (index > 0 || index === 0) {
+                    const currentObj = { ...usersAPIList[index] };
+                    currentObj.FDVAL = data.FDVAL;
+                    currentObj.POACTION = data.POACTION;
+                    currentObj.POASSIGN = data.POASSIGN;
+                    currentObj.POBOOK = data.POBOOK;
+                    currentObj.POCONSIG = data.POCONSIG;
+                    currentObj.POCONSOL = data.POCONSOL;
+                    currentObj.PODASH = data.PODASH;
+                    currentObj.POINQUIRE = data.POINQUIRE;
+                    currentObj.POINQUIRE_CN = data.POINQUIRE_CN;
+                    currentObj.POTRACK = data.POTRACK;
+                    currentObj.POTRANSIT = data.POTRANSIT;
+                    currentObj.POVENDOR = data.POVENDOR;
+                    console.log(currentObj);
+                    const keys = Object.keys(data);
 
-                const filtered = keys.filter((key) => {
-                    return data[key]
-                });
-                console.log(filtered);
-                const filteredString = filtered.join(",");
-                // dispatch(updateUser(currentObj));
-                const currentObjAPICopy = { ...usersAPIList[index] };
-                currentObjAPICopy.pomRoles = filteredString;
-                dispatch(updateUser(currentObjAPICopy));
-                dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+                    const filtered = keys.filter((key) => {
+                        return data[key]
+                    });
+                    console.log(filtered);
+                    const filteredString = filtered.join(",");
+                    // dispatch(updateUser(currentObj));
+                    const currentObjAPICopy = { ...usersAPIList[index] };
+                    currentObjAPICopy.pomRoles = filteredString;
+                    dispatch(updateUser(currentObjAPICopy));
+                    dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+                }
             } else {
                 alert("Add General Tab Data");
             }
-            reset();
+            if(location.pathname.includes("add")){
+                reset();
+            }
         } catch (error) {
             console.error(error);
         }
