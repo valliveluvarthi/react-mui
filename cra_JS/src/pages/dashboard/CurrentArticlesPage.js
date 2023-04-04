@@ -10,7 +10,7 @@ import { useSettingsContext } from '../../components/settings';
 import Iconify from '../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getArticle, deleteArticle } from '../../redux/slices/articles';
+import { getArticle, deleteArticle, getArticlesAPI, deleteArticlesAPI } from '../../redux/slices/articles';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 
@@ -100,7 +100,8 @@ export default function CurrentArticlesPage() {
                   icon="ic:baseline-delete"
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
-                   dispatch(deleteArticle(params?.row?.articleID))
+                   dispatch(deleteArticle(params?.row?.id));
+                   dispatch(deleteArticlesAPI(params?.row?.id));
                   }}
                 />
               </>
@@ -111,6 +112,9 @@ export default function CurrentArticlesPage() {
       },
     },
   ];
+  useEffect(() => {
+    dispatch(getArticlesAPI());
+  }, []);
   return (
     <>
       <Helmet>
@@ -130,7 +134,7 @@ export default function CurrentArticlesPage() {
                 },
               },
             }}
-            getRowId={(row) => row?.articleID}
+            getRowId={(row) => row?.articleID || row?.id}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
           />

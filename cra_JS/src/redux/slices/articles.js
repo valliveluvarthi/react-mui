@@ -10,7 +10,6 @@ const initialState = {
   isLoading: false,
   error: null,
   article: {
-    articleID: "",
     category: "",
     name: "",
     codeLoc: "",
@@ -22,32 +21,7 @@ const initialState = {
     newModal: "",
   },
   currentArticleID: null,
-  articlesList: [
-    {
-      articleID: "AR1",
-      category: "Category 1",
-      name: "Article 1",
-      codeLoc: "./",
-      appCode: "ARCODE1",
-      popup: "Popup 1",
-      bootstrap: "",
-      catSeq: "1",
-      pageSeq: "1",
-      newModal: "",
-    },
-    {
-      articleID: "AR2",
-      category: "Category 2",
-      name: "Article 2",
-      codeLoc: "./",
-      appCode: "ARCODE2",
-      popup: "Popup 2",
-      bootstrap: "",
-      catSeq: "2",
-      pageSeq: "2",
-      newModal: "",
-    },
-  ],
+  articlesList: [],
 };
 
 const slice = createSlice({
@@ -69,17 +43,16 @@ const slice = createSlice({
     getArticleSuccess(state, action) {
       state.isLoading = false;
       state.article = action.payload;
-      state.currentArticleID = action.payload.articleID;
+      state.currentArticleID = action.payload.id;
     },
     postArticleSuccess(state, action) {
       state.isLoading = false;
       state.articlesList.push(action.payload);
-      state.currentArticleID = action.payload.articleID;
       state.article = initialState.article;
     },
     updateArticleSuccess(state, action) {
       state.isLoading = false;
-      const index = state.articlesList?.findIndex((col) => col.articleID === action.payload.articleID);
+      const index = state.articlesList?.findIndex((col) => col.id === action.payload.id);
       if (index > 0 || index === 0) {
         state.articlesList.splice(index, 1);
       }
@@ -88,11 +61,17 @@ const slice = createSlice({
     },
     deleteArticleSuccess(state, action) {
       state.isLoading = false;
-      const index = state.articlesList?.findIndex((col) => col.articleID === action.payload);
+      const index = state.articlesList?.findIndex((col) => col.id === action.payload);
       if (index > 0 || index === 0) {
         state.articlesList.splice(index, 1);
       }
     },
+    // call api
+    getArticlesAPISuccess(state,action){
+      state.isLoading = false;
+      state.articlesList = action.payload;
+      state.currentArticleID = action.payload[action.payload.length - 1].id;
+    }
   },
 });
 
@@ -152,4 +131,50 @@ export function deleteArticle(articleObjID) {
   };
 }
 
+// api calls
+export function getArticlesAPI() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(`/articles`);
+      dispatch(slice.actions.getArticlesAPISuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function postArticlesAPI(postObj) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(`/articles`, postObj);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function putArtilcesAPI(id, putObj) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.put(`/articles/${id}`, putObj);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function deleteArticlesAPI(id) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.delete(`/articles/${id}`);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
 // ----------------------------------------------------------------------

@@ -16,7 +16,7 @@ import FormProvider, {
 import Iconify from '../../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
-import { postArticle, updateArticle, clearArticle } from '../../../redux/slices/articles';
+import { postArticle, updateArticle, clearArticle, postArticlesAPI, getArticlesAPI, putArtilcesAPI } from '../../../redux/slices/articles';
 
 // ----------------------------------------------------------------------
 export default function AddUserContent() {
@@ -27,8 +27,7 @@ export default function AddUserContent() {
     useEffect(() => {
         if (location.pathname.includes("add")) {
             dispatch(clearArticle({
-                articleID: "",
-                url : "",
+                url: "",
                 category: "",
                 name: "",
                 codeLoc: "",
@@ -43,7 +42,7 @@ export default function AddUserContent() {
     }, [location.pathname]);
     useEffect(() => {
         if (article && Object.keys(article)?.length > 0) {
-            setValue("articleID", article.articleID);
+            setValue("url", article.url);
             setValue("category", article.category);
             setValue("name", article.name);
             setValue("codeLoc", article.codeLoc);
@@ -55,8 +54,11 @@ export default function AddUserContent() {
             setValue("newModal", article.newModal);
         }
     }, [article]);
+    useEffect(() => {
+        dispatch(getArticlesAPI());
+    }, []);
     const ArticleFormSchema = Yup.object().shape({
-        articleID: Yup.string(),
+        url: Yup.string(),
         category: Yup.string(),
         name: Yup.string(),
         codeLoc: Yup.string(),
@@ -69,7 +71,6 @@ export default function AddUserContent() {
     });
 
     const defaultValues = {
-        articleID : "",
         category: "",
         name: "",
         codeLoc: "",
@@ -79,6 +80,7 @@ export default function AddUserContent() {
         catSeq: "",
         pageSeq: "",
         newModal: "",
+        url: "",
     };
     const methods = useForm({
         resolver: yupResolver(ArticleFormSchema),
@@ -97,9 +99,8 @@ export default function AddUserContent() {
     const onSubmit = async (data) => {
         try {
             if (currentArticleID) {
-                const index = articlesList?.findIndex((col) => col.articleID === currentArticleID);
+                const index = articlesList?.findIndex((col) => col.id === currentArticleID);
                 const currentObj = { ...articlesList[index] };
-                currentObj.articleID = data.articleID;
                 currentObj.url = data.url;
                 currentObj.category = data.category;
                 currentObj.name = data.name;
@@ -112,20 +113,39 @@ export default function AddUserContent() {
                 currentObj.newModal = data.newModal;
                 console.log(currentObj);
                 dispatch(updateArticle(currentObj));
+                dispatch(putArtilcesAPI(currentArticleID, currentObj));
+                setTimeout(() => {
+                    dispatch(getArticlesAPI());
+                }, 3000);
+
             } else {
                 dispatch(postArticle({
-                    articleID : `Article ${articlesList.length + 1}`,
-                    url : data.url,
-                    category : data.category,
-                    name : data.name,
-                    codeLoc : data.codeLoc,
-                    appCode : data.appCode,
-                    popup : data.popup,
-                    bootstrap : data.bootstrap,
-                    catSeq : data.catSeq,
-                    pageSeq : data.pageSeq,
-                    newModal : data.newModal,
+                    url: data.url,
+                    category: data.category,
+                    name: data.name,
+                    codeLoc: data.codeLoc,
+                    appCode: data.appCode,
+                    popup: data.popup,
+                    bootstrap: data.bootstrap,
+                    catSeq: data.catSeq,
+                    pageSeq: data.pageSeq,
+                    newModal: data.newModal,
                 }));
+                dispatch(postArticlesAPI({
+                    url: data.url,
+                    category: data.category,
+                    name: data.name,
+                    codeLoc: data.codeLoc,
+                    appCode: data.appCode,
+                    popup: data.popup,
+                    bootstrap: data.bootstrap,
+                    catSeq: data.catSeq,
+                    pageSeq: data.pageSeq,
+                    newModal: data.newModal,
+                }));
+                setTimeout(() => {
+                    dispatch(getArticlesAPI());
+                }, 3000);
             }
             reset();
         } catch (error) {
@@ -279,7 +299,7 @@ export default function AddUserContent() {
                             }}
                         />
                     </Stack>
-                    
+
 
                     <Stack flexDirection={"row"} alignItems={"center"} justifyContent="flex-end" sx={{ mt: 2, mr: "16%" }}>
                         <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
