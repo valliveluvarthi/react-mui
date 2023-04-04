@@ -98,12 +98,30 @@ export default function POMAccess() {
                 currentObj.POTRANSIT = data.POTRANSIT;
                 currentObj.POVENDOR = data.POVENDOR;
                 console.log(currentObj);
+                const keys = Object.keys(currentObj);
+
+                const filtered = keys.filter((key) => {
+                    return currentObj[key]
+                });
+                console.log(filtered);
                 dispatch(updateUser(currentObj));
             } else {
+                const keys = Object.keys(data);
+
+                const filtered = keys.filter((key) => {
+                    return data[key]
+                });
+                console.log(filtered);
                 dispatch(postUser({
-                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`,
-                    emailAddress: `user${usersList.length + 1}@gmail.com`,
-                    password: `Shapiro@2023`, programsToAccess: 35,
+                    userID: usersList.length + 1,
+                    userLogin: `User ${usersList.length + 1}`,
+                    email: `user${usersList.length + 1}@gmail.com`,
+                    password: `Shapiro@2023`,
+                    confirmPassword: `Shapiro@2023`,
+                    programsToAccess: 0,
+                    firstName: `User ${usersList.length + 1}`,
+                    lastName: `User ${usersList.length + 1}`,
+                    role: `Admin`,
                     FDVAL: data.FDVAL,
                     POACTION: data.POACTION,
                     POASSIGN: data.POASSIGN,

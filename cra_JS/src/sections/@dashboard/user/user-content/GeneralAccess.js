@@ -21,52 +21,52 @@ export default function GeneralAccess() {
     const dispatch = useDispatch();
     const { user, usersList, currentUserID } = useSelector((state) => state.user);
     useEffect(() => {
-        if(user && Object.keys(user)?.length > 0){
-            setValue("AGENTBOOK",user.AGENTBOOK);
-            setValue("AGENTTEMP",user.AGENTTEMP);
-            setValue("AMAZFBA",user.AMAZFBA);
-            setValue("ARSTMT",user.ARSTMT);
-            setValue("BKAPPCN",user.BKAPPCN);
-            setValue("BMM_NEW",user.BMM_NEW);
-            setValue("BOOKACTION",user.BOOKACTION);
-            setValue("BOOKAPP",user.BOOKAPP);
-            setValue("CAM_BULK",user.CAM_BULK);
-            setValue("CLASSAD",user.CLASSAD);
-            setValue("CUSTPROF",user.CUSTPROF);
-            setValue("DASHCNFR",user.DASHCNFR);
-            setValue("DASHCONT",user.DASHCONT);
-            setValue("DASHDOAU",user.DASHDOAU);
-            setValue("DASHMQC",user.DASHMQC);
-            setValue("DASHORDT",user.DASHORDT);
-            setValue("DASHPOM",user.DASHPOM);
-            setValue("DASHSHIP",user.DASHSHIP);
-            setValue("DASHTEST",user.DASHTEST);
-            setValue("DASHTRAN",user.DASHTRAN);
-            setValue("EDASH",user.EDASH);
-            setValue("EXPBOOK",user.EXPBOOK);
-            setValue("EXPLIC",user.EXPLIC);
-            setValue("EXPTEMPL",user.EXPTEMPL);
-            setValue("EXPTRACK",user.EXPTRACK);
-            setValue("IMPPER",user.IMPPER);
-            setValue("ISFPORTAL",user.ISFPORTAL);
-            setValue("ISFTEMPL",user.ISFTEMPL);
-            setValue("IT",user.IT);
-            setValue("IT_CN",user.IT_CN);
-            setValue("LANDCOST",user.LANDCOST);
-            setValue("ONLINEPAY",user.ONLINEPAY);
-            setValue("PARTS",user.PARTS);
-            setValue("QUOTE",user.QUOTE);
-            setValue("REPORT",user.REPORT);
-            setValue("SAILADMIN",user.SAILADMIN);
-            setValue("SELECTSAIL",user.SELECTSAIL);
-            setValue("SHIPTRACK",user.SHIPTRACK);
-            setValue("SNAPSHOT",user.SNAPSHOT);
-            setValue("TRANDASH",user.TRANDASH);
-            setValue("TRUCKPORT",user.TRUCKPORT);
-            setValue("USP",user.USP);
-            setValue("WAREWITH",user.WAREWITH);
+        if (user && Object.keys(user)?.length > 0) {
+            setValue("AGENTBOOK", user.AGENTBOOK);
+            setValue("AGENTTEMP", user.AGENTTEMP);
+            setValue("AMAZFBA", user.AMAZFBA);
+            setValue("ARSTMT", user.ARSTMT);
+            setValue("BKAPPCN", user.BKAPPCN);
+            setValue("BMM_NEW", user.BMM_NEW);
+            setValue("BOOKACTION", user.BOOKACTION);
+            setValue("BOOKAPP", user.BOOKAPP);
+            setValue("CAM_BULK", user.CAM_BULK);
+            setValue("CLASSAD", user.CLASSAD);
+            setValue("CUSTPROF", user.CUSTPROF);
+            setValue("DASHCNFR", user.DASHCNFR);
+            setValue("DASHCONT", user.DASHCONT);
+            setValue("DASHDOAU", user.DASHDOAU);
+            setValue("DASHMQC", user.DASHMQC);
+            setValue("DASHORDT", user.DASHORDT);
+            setValue("DASHPOM", user.DASHPOM);
+            setValue("DASHSHIP", user.DASHSHIP);
+            setValue("DASHTEST", user.DASHTEST);
+            setValue("DASHTRAN", user.DASHTRAN);
+            setValue("EDASH", user.EDASH);
+            setValue("EXPBOOK", user.EXPBOOK);
+            setValue("EXPLIC", user.EXPLIC);
+            setValue("EXPTEMPL", user.EXPTEMPL);
+            setValue("EXPTRACK", user.EXPTRACK);
+            setValue("IMPPER", user.IMPPER);
+            setValue("ISFPORTAL", user.ISFPORTAL);
+            setValue("ISFTEMPL", user.ISFTEMPL);
+            setValue("IT", user.IT);
+            setValue("IT_CN", user.IT_CN);
+            setValue("LANDCOST", user.LANDCOST);
+            setValue("ONLINEPAY", user.ONLINEPAY);
+            setValue("PARTS", user.PARTS);
+            setValue("QUOTE", user.QUOTE);
+            setValue("REPORT", user.REPORT);
+            setValue("SAILADMIN", user.SAILADMIN);
+            setValue("SELECTSAIL", user.SELECTSAIL);
+            setValue("SHIPTRACK", user.SHIPTRACK);
+            setValue("SNAPSHOT", user.SNAPSHOT);
+            setValue("TRANDASH", user.TRANDASH);
+            setValue("TRUCKPORT", user.TRUCKPORT);
+            setValue("USP", user.USP);
+            setValue("WAREWITH", user.WAREWITH);
         }
-      }, [user]);
+    }, [user]);
     const GeneralAccessFormSchema = Yup.object().shape({
         AGENTBOOK: Yup.bool(),
         AGENTTEMP: Yup.bool(),
@@ -174,9 +174,9 @@ export default function GeneralAccess() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if(currentUserID){
+            if (currentUserID) {
                 const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = {...usersList[index]};
+                const currentObj = { ...usersList[index] };
                 currentObj.AGENTBOOK = data.AGENTBOOK;
                 currentObj.AGENTTEMP = data.AGENTTEMP;
                 currentObj.AMAZFBA = data.AMAZFBA;
@@ -221,12 +221,30 @@ export default function GeneralAccess() {
                 currentObj.USP = data.USP;
                 currentObj.WAREWITH = data.WAREWITH;
                 console.log(currentObj);
+                const keys = Object.keys(currentObj);
+
+                const filtered = keys.filter((key) => {
+                    return currentObj[key]
+                });
+                console.log(filtered);
                 dispatch(updateUser(currentObj));
-            }else{
+            } else {
+                const keys = Object.keys(data);
+
+                const filtered = keys.filter((key) => {
+                    return data[key]
+                });
+                console.log(filtered);
                 dispatch(postUser({
-                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`, emailAddress: `user${usersList.length + 1}@gmail.com`,
-                    password : `Shapiro@2023`,
-                    programsToAccess: 35,
+                    userID: usersList.length + 1,
+                    userLogin: `User ${usersList.length + 1}`,
+                    email: `user${usersList.length + 1}@gmail.com`,
+                    password: `Shapiro@2023`,
+                    confirmPassword: `Shapiro@2023`,
+                    programsToAccess: 0,
+                    firstName: `User ${usersList.length + 1}`,
+                    lastName: `User ${usersList.length + 1}`,
+                    role: `Admin`,
                     AGENTBOOK: data.AGENTBOOK,
                     AGENTTEMP: data.AGENTTEMP,
                     AMAZFBA: data.AMAZFBA,
@@ -270,7 +288,7 @@ export default function GeneralAccess() {
                     TRUCKPORT: data.TRUCKPORT,
                     USP: data.USP,
                     WAREWITH: data.WAREWITH,
-               }))
+                }))
             }
             reset();
         } catch (error) {

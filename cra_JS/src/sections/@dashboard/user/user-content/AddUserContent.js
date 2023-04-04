@@ -18,19 +18,27 @@ export default function AddUserContent() {
     useEffect(() => {
         if (location.pathname.includes("add")) {
             dispatch(clearUser({
-                userID: "", userLogin: '', emailAddress: '',password : "", programsToAccess: 0,
-                usStatsCustAllowed: "",
-                chargeCust: "",
-                usExceptionCodes: "",
-                usPartsCustNo: "",
-                accountTeamMail: "",
-                usScannedDocsCustNo: "",
-                exportStatsCustNoAllowed: "",
-                exportBookingTemplateCustNo: "",
-                exportBookingNotifyEmailAddress: "",
-                ISFCustNo: "",
-                ISFBranch: "",
-                ISFDepartment: "",
+                userID: "", userLogin: '',
+                confirmPassword: "",
+                password: "", email: '', programsToAccess: 0,
+                firstName: "",
+                lastName: "",
+                role: "",
+
+                custNoAllowed: "",
+                chargeCustAllowed: "",
+                // usStatsCustAllowed: "",
+                // chargeCust: "",
+                // usExceptionCodes: "",
+                // usPartsCustNo: "",
+                // accountTeamMail: "",
+                // usScannedDocsCustNo: "",
+                // exportStatsCustNoAllowed: "",
+                // exportBookingTemplateCustNo: "",
+                // exportBookingNotifyEmailAddress: "",
+                // ISFCustNo: "",
+                // ISFBranch: "",
+                // ISFDepartment: "",
                 AGENTBOOK: false,
                 AGENTTEMP: false,
                 AMAZFBA: false,
@@ -86,7 +94,7 @@ export default function AddUserContent() {
                 POTRACK: false,
                 POTRANSIT: false,
                 POVENDOR: false,
-              }));
+            }));
         }
     }, [location.pathname]);
     return (

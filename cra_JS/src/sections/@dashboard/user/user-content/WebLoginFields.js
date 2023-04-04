@@ -25,49 +25,56 @@ export default function WebLoginFields() {
     const { user, usersList, currentUserID } = useSelector((state) => state.user);
     const location = useLocation();
     useEffect(() => {
-        if(user && Object.keys(user)?.length > 0){
-            setValue("usStatsCustAllowed",user.usStatsCustAllowed);
-            setValue("chargeCust",user.chargeCust);
-            setValue("usExceptionCodes",user.usExceptionCodes);
-            setValue("usPartsCustNo",user.usPartsCustNo);
-            setValue("accountTeamMail",user.accountTeamMail);
-            setValue("usScannedDocsCustNo",user.usScannedDocsCustNo);
-            setValue("exportStatsCustNoAllowed",user.exportStatsCustNoAllowed);
-            setValue("exportBookingTemplateCustNo",user.exportBookingTemplateCustNo);
-            setValue("exportBookingNotifyEmailAddress",user.exportBookingNotifyEmailAddress);
-            setValue("ISFCustNo",user.ISFCustNo);
-            setValue("ISFBranch",user.ISFBranch);
-            setValue("ISFDepartment",user.ISFDepartment);
+        if (user && Object.keys(user)?.length > 0) {
+            setValue("custNoAllowed", user.custNoAllowed);
+            setValue("chargeCustAllowed", user.chargeCustAllowed);
+            // setValue("usStatsCustAllowed", user.usStatsCustAllowed);
+            // setValue("chargeCust", user.chargeCust);
+            // setValue("usExceptionCodes", user.usExceptionCodes);
+            // setValue("usPartsCustNo", user.usPartsCustNo);
+            // setValue("accountTeamMail", user.accountTeamMail);
+            // setValue("usScannedDocsCustNo", user.usScannedDocsCustNo);
+            // setValue("exportStatsCustNoAllowed", user.exportStatsCustNoAllowed);
+            // setValue("exportBookingTemplateCustNo", user.exportBookingTemplateCustNo);
+            // setValue("exportBookingNotifyEmailAddress", user.exportBookingNotifyEmailAddress);
+            // setValue("ISFCustNo", user.ISFCustNo);
+            // setValue("ISFBranch", user.ISFBranch);
+            // setValue("ISFDepartment", user.ISFDepartment);
         }
-      }, [user]);
+    }, [user]);
     const WebLoginFormSchema = Yup.object().shape({
-        usStatsCustAllowed: Yup.string(),
-        chargeCust: Yup.string(),
-        usExceptionCodes: Yup.string(),
-        usPartsCustNo: Yup.string(),
-        accountTeamMail: Yup.string(),
-        usScannedDocsCustNo: Yup.string(),
-        exportStatsCustNoAllowed: Yup.string(),
-        exportBookingTemplateCustNo: Yup.string(),
-        exportBookingNotifyEmailAddress: Yup.string(),
-        ISFCustNo: Yup.string(),
-        ISFBranch: Yup.string(),
-        ISFDepartment: Yup.string(),
+        // usStatsCustAllowed: Yup.string(),
+        custNoAllowed: Yup.string(),
+        // chargeCust: Yup.string(),
+        chargeCustAllowed: Yup.string(),
+
+        // usExceptionCodes: Yup.string(),
+        // usPartsCustNo: Yup.string(),
+        // accountTeamMail: Yup.string(),
+        // usScannedDocsCustNo: Yup.string(),
+        // exportStatsCustNoAllowed: Yup.string(),
+        // exportBookingTemplateCustNo: Yup.string(),
+        // exportBookingNotifyEmailAddress: Yup.string(),
+        // ISFCustNo: Yup.string(),
+        // ISFBranch: Yup.string(),
+        // ISFDepartment: Yup.string(),
     });
 
     const defaultValues = {
-        usStatsCustAllowed: "",
-        chargeCust: "",
-        usExceptionCodes: "",
-        usPartsCustNo: "",
-        accountTeamMail: "",
-        usScannedDocsCustNo: "",
-        exportStatsCustNoAllowed: "",
-        exportBookingTemplateCustNo: "",
-        exportBookingNotifyEmailAddress: "",
-        ISFCustNo: "",
-        ISFBranch: "",
-        ISFDepartment: "",
+        custNoAllowed: "",
+        chargeCustAllowed: "",
+        // usStatsCustAllowed: "",
+        // chargeCust: "",
+        // usExceptionCodes: "",
+        // usPartsCustNo: "",
+        // accountTeamMail: "",
+        // usScannedDocsCustNo: "",
+        // exportStatsCustNoAllowed: "",
+        // exportBookingTemplateCustNo: "",
+        // exportBookingNotifyEmailAddress: "",
+        // ISFCustNo: "",
+        // ISFBranch: "",
+        // ISFDepartment: "",
     };
     const methods = useForm({
         resolver: yupResolver(WebLoginFormSchema),
@@ -85,41 +92,51 @@ export default function WebLoginFields() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if(currentUserID){
+            if (currentUserID) {
                 const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = {...usersList[index]};
-                currentObj.usStatsCustAllowed = data.usStatsCustAllowed;
-                currentObj.chargeCust = data.chargeCust;
-                currentObj.usExceptionCodes = data.usExceptionCodes;
-                currentObj.usPartsCustNo = data.usPartsCustNo;
-                currentObj.accountTeamMail = data.accountTeamMail;
-                currentObj.usScannedDocsCustNo = data.usScannedDocsCustNo;
-                currentObj.exportStatsCustNoAllowed = data.exportStatsCustNoAllowed;
-                currentObj.exportBookingTemplateCustNo = data.exportBookingTemplateCustNo;
-                currentObj.exportBookingNotifyEmailAddress = data.exportBookingNotifyEmailAddress;
-                currentObj.ISFCustNo = data.ISFCustNo;
-                currentObj.ISFBranch = data.ISFBranch;
-                currentObj.ISFDepartment = data.ISFDepartment;
+                const currentObj = { ...usersList[index] };
+                currentObj.custNoAllowed = data.custNoAllowed;
+                currentObj.chargeCustAllowed = data.chargeCustAllowed;
+                // currentObj.usStatsCustAllowed = data.usStatsCustAllowed;
+                // currentObj.chargeCust = data.chargeCust;
+                // currentObj.usExceptionCodes = data.usExceptionCodes;
+                // currentObj.usPartsCustNo = data.usPartsCustNo;
+                // currentObj.accountTeamMail = data.accountTeamMail;
+                // currentObj.usScannedDocsCustNo = data.usScannedDocsCustNo;
+                // currentObj.exportStatsCustNoAllowed = data.exportStatsCustNoAllowed;
+                // currentObj.exportBookingTemplateCustNo = data.exportBookingTemplateCustNo;
+                // currentObj.exportBookingNotifyEmailAddress = data.exportBookingNotifyEmailAddress;
+                // currentObj.ISFCustNo = data.ISFCustNo;
+                // currentObj.ISFBranch = data.ISFBranch;
+                // currentObj.ISFDepartment = data.ISFDepartment;
                 console.log(currentObj);
                 dispatch(updateUser(currentObj));
-            }else{
+            } else {
                 dispatch(postUser({
-                    userID: usersList.length + 1, userLogin: `User ${usersList.length + 1}`, emailAddress: `user${usersList.length + 1}@gmail.com`,
-                    password : `Shapiro@2023`,
-                    programsToAccess: 35,
-                    usStatsCustAllowed: data.usStatsCustAllowed,
-                    chargeCust: data.chargeCust,
-                    usExceptionCodes: data.usExceptionCodes,
-                    usPartsCustNo: data.usPartsCustNo,
-                    accountTeamMail: data.accountTeamMail,
-                    usScannedDocsCustNo: data.usScannedDocsCustNo,
-                    exportStatsCustNoAllowed: data.exportStatsCustNoAllowed,
-                    exportBookingTemplateCustNo: data.exportBookingTemplateCustNo,
-                    exportBookingNotifyEmailAddress: data.exportBookingNotifyEmailAddress,
-                    ISFCustNo: data.ISFCustNo,
-                    ISFBranch: data.ISFBranch,
-                    ISFDepartment: data.ISFDepartment,
-               }));
+                    userID: usersList.length + 1,
+                    userLogin: `User ${usersList.length + 1}`,
+                    email: `user${usersList.length + 1}@gmail.com`,
+                    password: `Shapiro@2023`,
+                    confirmPassword: `Shapiro@2023`,
+                    programsToAccess: 0,
+                    custNoAllowed: data.custNoAllowed,
+                    chargeCustAllowed: data.chargeCustAllowed,
+                    firstName: `User ${usersList.length + 1}`,
+                    lastName: `User ${usersList.length + 1}`,
+                    role: `Admin`,
+                    // usStatsCustAllowed: data.usStatsCustAllowed,
+                    // chargeCust: data.chargeCust,
+                    // usExceptionCodes: data.usExceptionCodes,
+                    // usPartsCustNo: data.usPartsCustNo,
+                    // accountTeamMail: data.accountTeamMail,
+                    // usScannedDocsCustNo: data.usScannedDocsCustNo,
+                    // exportStatsCustNoAllowed: data.exportStatsCustNoAllowed,
+                    // exportBookingTemplateCustNo: data.exportBookingTemplateCustNo,
+                    // exportBookingNotifyEmailAddress: data.exportBookingNotifyEmailAddress,
+                    // ISFCustNo: data.ISFCustNo,
+                    // ISFBranch: data.ISFBranch,
+                    // ISFDepartment: data.ISFDepartment,
+                }));
             }
             reset();
         } catch (error) {
@@ -135,7 +152,7 @@ export default function WebLoginFields() {
                 <Card sx={{ p: 2 }}>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> US Stats Cust Allowed </Typography>
-                        <RHFTextField name="usStatsCustAllowed" label=""
+                        <RHFTextField name="custNoAllowed" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -145,11 +162,11 @@ export default function WebLoginFields() {
                                     padding: 1,
                                 },
                             }}
-                            />
+                        />
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Charge Cust </Typography>
-                        <RHFTextField name="chargeCust" label=""
+                        <RHFTextField name="chargeCustAllowed" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -160,7 +177,7 @@ export default function WebLoginFields() {
                                 },
                             }} />
                     </Stack>
-                    <Stack flexDirection={"row"} alignItems={"center"}>
+                    {/* <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> US Exception Codes </Typography>
                         <RHFTextField name="usExceptionCodes" label=""
                             variant="outlined"
@@ -289,9 +306,9 @@ export default function WebLoginFields() {
                                     padding: 1,
                                 },
                             }} />
-                    </Stack>
+                    </Stack> */}
 
-                    <Stack flexDirection={"row"} alignItems={"center"} justifyContent="flex-end" sx={{mt : 2, mr : "16%"}}>
+                    <Stack flexDirection={"row"} alignItems={"center"} justifyContent="flex-end" sx={{ mt: 2, mr: "16%" }}>
                         <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                             Save
                         </LoadingButton>

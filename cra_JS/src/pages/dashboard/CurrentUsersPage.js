@@ -32,7 +32,7 @@ export default function CurrentUsersPage() {
       align: 'left',
     },
     {
-      field: 'emailAddress',
+      field: 'email',
       headerName: 'User Email Address',
       width: 200,
       editable: true,

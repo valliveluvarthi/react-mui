@@ -28,15 +28,16 @@ export default function AddUserContent() {
         if (location.pathname.includes("add")) {
             dispatch(clearArticle({
                 articleID: "",
+                url : "",
                 category: "",
                 name: "",
-                code_loc: "",
-                app_code: "",
+                codeLoc: "",
+                appCode: "",
                 popup: "",
                 bootstrap: "",
-                cat_seq: "",
-                page_seq: "",
-                new_modal: "",
+                catSeq: "",
+                pageSeq: "",
+                newModal: "",
             }));
         }
     }, [location.pathname]);
@@ -45,39 +46,39 @@ export default function AddUserContent() {
             setValue("articleID", article.articleID);
             setValue("category", article.category);
             setValue("name", article.name);
-            setValue("code_loc", article.code_loc);
-            setValue("app_code", article.app_code);
+            setValue("codeLoc", article.codeLoc);
+            setValue("appCode", article.appCode);
             setValue("popup", article.popup);
             setValue("bootstrap", article.bootstrap);
-            setValue("cat_seq", article.cat_seq);
-            setValue("page_seq", article.page_seq);
-            setValue("new_modal", article.new_modal);
+            setValue("catSeq", article.catSeq);
+            setValue("pageSeq", article.pageSeq);
+            setValue("newModal", article.newModal);
         }
     }, [article]);
     const ArticleFormSchema = Yup.object().shape({
         articleID: Yup.string(),
         category: Yup.string(),
         name: Yup.string(),
-        code_loc: Yup.string(),
-        app_code: Yup.string(),
+        codeLoc: Yup.string(),
+        appCode: Yup.string(),
         popup: Yup.string(),
         bootstrap: Yup.string(),
-        cat_seq: Yup.string(),
-        page_seq: Yup.string(),
-        new_modal: Yup.string(),
+        catSeq: Yup.string(),
+        pageSeq: Yup.string(),
+        newModal: Yup.string(),
     });
 
     const defaultValues = {
         articleID : "",
         category: "",
         name: "",
-        code_loc: "",
-        app_code: "",
+        codeLoc: "",
+        appCode: "",
         popup: "",
         bootstrap: "",
-        cat_seq: "",
-        page_seq: "",
-        new_modal: "",
+        catSeq: "",
+        pageSeq: "",
+        newModal: "",
     };
     const methods = useForm({
         resolver: yupResolver(ArticleFormSchema),
@@ -99,29 +100,31 @@ export default function AddUserContent() {
                 const index = articlesList?.findIndex((col) => col.articleID === currentArticleID);
                 const currentObj = { ...articlesList[index] };
                 currentObj.articleID = data.articleID;
+                currentObj.url = data.url;
                 currentObj.category = data.category;
                 currentObj.name = data.name;
-                currentObj.code_loc = data.code_loc;
-                currentObj.app_code = data.app_code;
+                currentObj.codeLoc = data.codeLoc;
+                currentObj.appCode = data.appCode;
                 currentObj.popup = data.popup;
                 currentObj.bootstrap = data.bootstrap;
-                currentObj.cat_seq = data.cat_seq;
-                currentObj.page_seq = data.page_seq;
-                currentObj.new_modal = data.new_modal;
+                currentObj.catSeq = data.catSeq;
+                currentObj.pageSeq = data.pageSeq;
+                currentObj.newModal = data.newModal;
                 console.log(currentObj);
                 dispatch(updateArticle(currentObj));
             } else {
                 dispatch(postArticle({
                     articleID : `Article ${articlesList.length + 1}`,
+                    url : data.url,
                     category : data.category,
                     name : data.name,
-                    code_loc : data.code_loc,
-                    app_code : data.app_code,
+                    codeLoc : data.codeLoc,
+                    appCode : data.appCode,
                     popup : data.popup,
                     bootstrap : data.bootstrap,
-                    cat_seq : data.cat_seq,
-                    page_seq : data.page_seq,
-                    new_modal : data.new_modal,
+                    catSeq : data.catSeq,
+                    pageSeq : data.pageSeq,
+                    newModal : data.newModal,
                 }));
             }
             reset();
@@ -136,6 +139,20 @@ export default function AddUserContent() {
             </Helmet>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Card sx={{ p: 2 }}>
+                    <Stack flexDirection={"row"} alignItems={"center"}>
+                        <Typography variant='normal' sx={{ width: "33.333333%" }}> URL </Typography>
+                        <RHFTextField name="url" label=""
+                            variant="outlined"
+                            sx={{
+                                borderRadius: '10px',
+                                marginBottom: "5px",
+                                width: "50%",
+                                '& .MuiOutlinedInput-input': {
+                                    padding: 1,
+                                },
+                            }}
+                        />
+                    </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Category </Typography>
                         <RHFTextField name="category" label=""
@@ -166,7 +183,7 @@ export default function AddUserContent() {
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Code Loc </Typography>
-                        <RHFTextField name="code_loc" label=""
+                        <RHFTextField name="codeLoc" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -180,7 +197,7 @@ export default function AddUserContent() {
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> App Code </Typography>
-                        <RHFTextField name="app_code" label=""
+                        <RHFTextField name="appCode" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -222,7 +239,7 @@ export default function AddUserContent() {
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Cat Seq </Typography>
-                        <RHFTextField name="cat_seq" label=""
+                        <RHFTextField name="catSeq" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -236,7 +253,7 @@ export default function AddUserContent() {
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Page Seq </Typography>
-                        <RHFTextField name="page_seq" label=""
+                        <RHFTextField name="pageSeq" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -250,7 +267,7 @@ export default function AddUserContent() {
                     </Stack>
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> New Modal </Typography>
-                        <RHFTextField name="new_modal" label=""
+                        <RHFTextField name="newModal" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
