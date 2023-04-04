@@ -17,7 +17,7 @@ import { SeoIllustration } from '../../assets/illustrations';
 // ----------------------------------------------------------------------
 
 const columns = [
-  { field: 'userID', headerName: 'User ID', width: 100 },
+  { field: 'userId', headerName: 'User ID', width: 100 },
   {
     field: 'userLogin',
     headerName: 'User Login',
@@ -97,16 +97,16 @@ const columns = [
 ];
 
 const rows = [
-  { userID: 1, userLogin: 'Mike', emailAddress: 'Mike@gmail.com', programsToAccess: 35 },
-  { userID: 2, userLogin: 'Russel', emailAddress: 'Russel@gmail.com', programsToAccess: 35 },
-  { userID: 3, userLogin: 'Rodolfo', emailAddress: 'Rodolfo@gmail.com', programsToAccess: 35 },
-  { userID: 4, userLogin: 'Chandu', emailAddress: 'Chandu@gmail.com', programsToAccess: 35 },
-  { userID: 5, userLogin: 'Pulkit', emailAddress: 'Pulkit@gmail.com', programsToAccess: 35 },
-  { userID: 6, userLogin: 'Praveen', emailAddress: 'Praveen@gmail.com', programsToAccess: 35 },
-  { userID: 7, userLogin: 'Uvashri', emailAddress: 'Uvashri@gmail.com', programsToAccess: 35 },
-  { userID: 8, userLogin: 'Swathika', emailAddress: 'Swathika@gmail.com', programsToAccess: 35 },
-  { userID: 9, userLogin: 'Yolonda', emailAddress: 'Yolonda@gmail.com', programsToAccess: 35 },
-  { userID: 10, userLogin: 'Erik', emailAddress: 'Erik@gmail.com', programsToAccess: 35 },
+  { userId: 1, userLogin: 'Mike', emailAddress: 'Mike@gmail.com', programsToAccess: 35 },
+  { userId: 2, userLogin: 'Russel', emailAddress: 'Russel@gmail.com', programsToAccess: 35 },
+  { userId: 3, userLogin: 'Rodolfo', emailAddress: 'Rodolfo@gmail.com', programsToAccess: 35 },
+  { userId: 4, userLogin: 'Chandu', emailAddress: 'Chandu@gmail.com', programsToAccess: 35 },
+  { userId: 5, userLogin: 'Pulkit', emailAddress: 'Pulkit@gmail.com', programsToAccess: 35 },
+  { userId: 6, userLogin: 'Praveen', emailAddress: 'Praveen@gmail.com', programsToAccess: 35 },
+  { userId: 7, userLogin: 'Uvashri', emailAddress: 'Uvashri@gmail.com', programsToAccess: 35 },
+  { userId: 8, userLogin: 'Swathika', emailAddress: 'Swathika@gmail.com', programsToAccess: 35 },
+  { userId: 9, userLogin: 'Yolonda', emailAddress: 'Yolonda@gmail.com', programsToAccess: 35 },
+  { userId: 10, userLogin: 'Erik', emailAddress: 'Erik@gmail.com', programsToAccess: 35 },
 ];
 
 export default function GeneralAppPage() {
@@ -134,7 +134,7 @@ export default function GeneralAppPage() {
                 },
               },
             }}
-            getRowId={(row) => row?.userID}
+            getRowId={(row) => row?.userId}
             pageSizeOptions={[5]}
             // checkboxSelection
             disableRowSelectionOnClick

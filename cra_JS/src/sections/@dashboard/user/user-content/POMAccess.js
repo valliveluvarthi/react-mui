@@ -12,7 +12,7 @@ import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
 
 
 
@@ -20,21 +20,36 @@ import { postUser, updateUser } from '../../../../redux/slices/users';
 export default function POMAccess() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList, currentUserID } = useSelector((state) => state.user);
+    const { user, usersList, usersAPIList, currentuserId } = useSelector((state) => state.user);
     useEffect(() => {
-        if (user && Object.keys(user)?.length > 0) {
-            setValue("FDVAL", user.FDVAL);
-            setValue("POACTION", user.POACTION);
-            setValue("POASSIGN", user.POASSIGN);
-            setValue("POBOOK", user.POBOOK);
-            setValue("POCONSIG", user.POCONSIG);
-            setValue("POCONSOL", user.POCONSOL);
-            setValue("PODASH", user.PODASH);
-            setValue("POINQUIRE", user.POINQUIRE);
-            setValue("POINQUIRE_CN", user.POINQUIRE_CN);
-            setValue("POTRACK", user.POTRACK);
-            setValue("POTRANSIT", user.POTRANSIT);
-            setValue("POVENDOR", user.POVENDOR);
+        const hasKey = 'pomRoles' in user;
+        if (user && Object.keys(user)?.length > 0 && hasKey) {
+            setValue("FDVAL", user?.pomRoles?.includes("FDVAL"));
+            setValue("POACTION", user?.pomRoles?.includes("POACTION"));
+            setValue("POASSIGN", user?.pomRoles?.includes("POASSIGN"));
+            setValue("POBOOK", user?.pomRoles?.includes("POBOOK"));
+            setValue("POCONSIG", user?.pomRoles?.includes("POCONSIG"));
+            setValue("POCONSOL", user?.pomRoles?.includes("POCONSOL"));
+            setValue("PODASH", user?.pomRoles?.includes("PODASH"));
+            setValue("POINQUIRE", user?.pomRoles?.includes("POINQUIRE"));
+            setValue("POINQUIRE_CN", user?.pomRoles?.includes("POINQUIRE_CN"));
+            setValue("POTRACK", user?.pomRoles?.includes("POTRACK"));
+            setValue("POTRANSIT", user?.pomRoles?.includes("POTRANSIT"));
+            setValue("POVENDOR", user?.pomRoles?.includes("POVENDOR"));
+        }
+        if (user && Object.keys(user)?.length > 0 && !hasKey) {
+            setValue("FDVAL", user?.FDVAL);
+            setValue("POACTION", user?.POACTION);
+            setValue("POASSIGN", user?.POASSIGN);
+            setValue("POBOOK", user?.POBOOK);
+            setValue("POCONSIG", user?.POCONSIG);
+            setValue("POCONSOL", user?.POCONSOL);
+            setValue("PODASH", user?.PODASH);
+            setValue("POINQUIRE", user?.POINQUIRE);
+            setValue("POINQUIRE_CN", user?.POINQUIRE_CN);
+            setValue("POTRACK", user?.POTRACK);
+            setValue("POTRANSIT", user?.POTRANSIT);
+            setValue("POVENDOR", user?.POVENDOR);
         }
     }, [user]);
     const POMAccessFormSchema = Yup.object().shape({
@@ -82,9 +97,9 @@ export default function POMAccess() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if (currentUserID) {
-                const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = { ...usersList[index] };
+            if (currentuserId) {
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
+                const currentObj = { ...usersAPIList[index] };
                 currentObj.FDVAL = data.FDVAL;
                 currentObj.POACTION = data.POACTION;
                 currentObj.POASSIGN = data.POASSIGN;
@@ -98,43 +113,20 @@ export default function POMAccess() {
                 currentObj.POTRANSIT = data.POTRANSIT;
                 currentObj.POVENDOR = data.POVENDOR;
                 console.log(currentObj);
-                const keys = Object.keys(currentObj);
-
-                const filtered = keys.filter((key) => {
-                    return currentObj[key]
-                });
-                console.log(filtered);
-                dispatch(updateUser(currentObj));
-            } else {
                 const keys = Object.keys(data);
 
                 const filtered = keys.filter((key) => {
                     return data[key]
                 });
                 console.log(filtered);
-                dispatch(postUser({
-                    userID: usersList.length + 1,
-                    userLogin: `User ${usersList.length + 1}`,
-                    email: `user${usersList.length + 1}@gmail.com`,
-                    password: `Shapiro@2023`,
-                    confirmPassword: `Shapiro@2023`,
-                    programsToAccess: 0,
-                    firstName: `User ${usersList.length + 1}`,
-                    lastName: `User ${usersList.length + 1}`,
-                    role: `Admin`,
-                    FDVAL: data.FDVAL,
-                    POACTION: data.POACTION,
-                    POASSIGN: data.POASSIGN,
-                    POBOOK: data.POBOOK,
-                    POCONSIG: data.POCONSIG,
-                    POCONSOL: data.POCONSOL,
-                    PODASH: data.PODASH,
-                    POINQUIRE: data.POINQUIRE,
-                    POINQUIRE_CN: data.POINQUIRE_CN,
-                    POTRACK: data.POTRACK,
-                    POTRANSIT: data.POTRANSIT,
-                    POVENDOR: data.POVENDOR,
-                }));
+                const filteredString = filtered.join(",");
+                // dispatch(updateUser(currentObj));
+                const currentObjAPICopy = { ...usersAPIList[index] };
+                currentObjAPICopy.pomRoles = filteredString;
+                dispatch(updateUser(currentObjAPICopy));
+                dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+            } else {
+                alert("Add General Tab Data");
             }
             reset();
         } catch (error) {

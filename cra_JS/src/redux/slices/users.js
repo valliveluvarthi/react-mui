@@ -12,12 +12,14 @@ const initialState = {
 
 
   user: {
-    userID: "", userLogin: '',
+    id: "",
+    userId: "", userLogin: '',
     password: "",
-    confirmPassword: "", email: '', programsToAccess: 0,
+    confirmPassword: "", email: '',
     firstName: "",
     lastName: "",
     role: "",
+    title:"",
 
     custNoAllowed: "",
     chargeCustAllowed: "",
@@ -89,10 +91,10 @@ const initialState = {
     POTRANSIT: false,
     POVENDOR: false,
   },
-  currentUserID: null,
+  currentuserId: null,
   usersList: [
     {
-      userID: 1, userLogin: 'Mike', email: 'Mike@gmail.com', programsToAccess: 35,
+      id: "", userId: 1, userLogin: 'Mike', email: 'Mike@gmail.com', programsToAccess: 35,
       custNoAllowed: "FDSALES",
       chargeCustAllowed: "",
       AGENTBOOK: false,
@@ -152,7 +154,7 @@ const initialState = {
       POVENDOR: true,
     },
     {
-      userID: 2, userLogin: 'Russel', email: 'Russel@gmail.com', programsToAccess: 35,
+      id: "", userId: 2, userLogin: 'Russel', email: 'Russel@gmail.com', programsToAccess: 35,
       custNoAllowed: "FDSALES",
       chargeCustAllowed: "",
       AGENTBOOK: false,
@@ -212,7 +214,7 @@ const initialState = {
       POVENDOR: true,
     },
     {
-      userID: 3, userLogin: 'Rodolfo', email: 'Rodolfo@gmail.com', programsToAccess: 35,
+      id: "", userId: 3, userLogin: 'Rodolfo', email: 'Rodolfo@gmail.com', programsToAccess: 35,
       custNoAllowed: "FDSALES",
       chargeCustAllowed: "",
       AGENTBOOK: false,
@@ -272,7 +274,7 @@ const initialState = {
       POVENDOR: true,
     },
     {
-      userID: 4, userLogin: 'Chandu', email: 'Chandu@gmail.com', programsToAccess: 35,
+      id: "", userId: 4, userLogin: 'Chandu', email: 'Chandu@gmail.com', programsToAccess: 35,
       custNoAllowed: "FDSALES",
       chargeCustAllowed: "",
       AGENTBOOK: false,
@@ -332,7 +334,7 @@ const initialState = {
       POVENDOR: true,
     },
     {
-      userID: 5, userLogin: 'Pulkit', email: 'Pulkit@gmail.com', programsToAccess: 35,
+      id: "", userId: 5, userLogin: 'Pulkit', email: 'Pulkit@gmail.com', programsToAccess: 35,
       custNoAllowed: "FDSALES",
       chargeCustAllowed: "",
       AGENTBOOK: false,
@@ -392,6 +394,7 @@ const initialState = {
       POVENDOR: true,
     }
   ],
+  usersAPIList: [],
 };
 
 const slice = createSlice({
@@ -413,29 +416,41 @@ const slice = createSlice({
     getUserSuccess(state, action) {
       state.isLoading = false;
       state.user = action.payload;
-      state.currentUserID = action.payload.userID;
+      console.log(state.user.id);
+      state.currentuserId = action.payload.id;
     },
     postUserSuccess(state, action) {
       state.isLoading = false;
       state.usersList.push(action.payload);
-      state.currentUserID = action.payload.userID;
+      state.currentuserId = action.payload.userId;
       state.user = initialState.user;
     },
     updateUserSuccess(state, action) {
       state.isLoading = false;
-      const index = state.usersList?.findIndex((col) => col.userID === action.payload.userID);
+      const index = state.usersAPIList?.findIndex((col) => col.id === action.payload.id);
       if (index > 0 || index === 0) {
-        state.usersList.splice(index, 1);
+        state.usersAPIList.splice(index, 1);
       }
-      state.usersList.push(action.payload);
+      state.usersAPIList.push(action.payload);
       state.user = initialState.user;
     },
     deleteUserSuccess(state, action) {
       state.isLoading = false;
-      const index = state.usersList?.findIndex((col) => col.userID === action.payload);
+      const index = state.usersAPIList?.findIndex((col) => col.id === action.payload);
       if (index > 0 || index === 0) {
-        state.usersList.splice(index, 1);
+        state.usersAPIList.splice(index, 1);
       }
+    },
+    // api success calls
+    getUsersAPISuccess(state, action) {
+      state.isLoading = false;
+      state.usersAPIList = action.payload;
+    },
+    postUsersAPISuccess(state, action) {
+
+    },
+    putUsersAPISuccess(state, action) {
+
     },
   },
 });
@@ -494,6 +509,58 @@ export function deleteUser(userObjID) {
       dispatch(slice.actions.hasError(error));
     }
   };
+}
+
+// api calls
+export function getUsersAPI() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(`/users`);
+      console.log("API call for get users", response);
+      dispatch(slice.actions.getUsersAPISuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function postUsersAPI(postObj) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(`/users`, postObj);
+      console.log("API call for post users", response);
+      dispatch(slice.actions.postUsersAPISuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function putUsersAPI(id, putObj) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.put(`/users/${id}`, putObj);
+      console.log("API call for post users", response);
+      dispatch(slice.actions.putUsersAPISuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+export function deleteUsersAPI(id) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.delete(`/users/${id}`);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
 }
 
 // ----------------------------------------------------------------------

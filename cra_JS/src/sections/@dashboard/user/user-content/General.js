@@ -16,18 +16,18 @@ import FormProvider, {
 import Iconify from '../../../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser } from '../../../../redux/slices/users';
+import { postUser, updateUser, postUsersAPI, putUsersAPI } from '../../../../redux/slices/users';
 
 // ----------------------------------------------------------------------
 export default function General() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList, currentUserID } = useSelector((state) => state.user);
+    const { user, usersList, currentuserId } = useSelector((state) => state.user);
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     useEffect(() => {
         if (user && Object.keys(user)?.length > 0) {
-            setValue("userID", user.userID);
+            setValue("userId", user.userId);
             setValue("email", user.email);
             setValue("password", user.password);
             setValue("confirmPassword", user.confirmPassword);
@@ -35,28 +35,31 @@ export default function General() {
             setValue("lastName", user.lastName);
             setValue("role", user.role);
             setValue("userLogin", user.userLogin);
+            setValue("title", user.title);
         }
     }, [user]);
     const WebLoginFormSchema = Yup.object().shape({
-        userID: Yup.string().required(),
+        userId: Yup.string().required(),
         email: Yup.string().required(),
-        password: Yup.string().required(),
-        confirmPassword: Yup.string().required(),
+        password: Yup.string(),
+        confirmPassword: Yup.string(),
         firstName: Yup.string().required(),
         lastName: Yup.string().required(),
         role: Yup.string().required(),
         userLogin: Yup.string().required(),
+        title: Yup.string().required(),
     });
 
     const defaultValues = {
-        userID : "",
-        email : "",
-        password : "",
-        confirmPassword : "",
-        firstName : "",
-        lastName : "",
-        role : "",
-        userLogin : "",
+        userId: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        firstName: "",
+        lastName: "",
+        role: "",
+        userLogin: "",
+        title : "",
     };
     const methods = useForm({
         resolver: yupResolver(WebLoginFormSchema),
@@ -74,31 +77,43 @@ export default function General() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if (currentUserID) {
-                const index = usersList?.findIndex((col) => col.userID === currentUserID);
+            if (currentuserId) {
+                const index = usersList?.findIndex((col) => col.userId === currentuserId);
                 const currentObj = { ...usersList[index] };
-                currentObj.userID = data.userID;
+                currentObj.userId = data.userId;
                 currentObj.email = data.email;
-                currentObj.password = data.password;
-                currentObj.confirmPassword = data.confirmPassword;
                 currentObj.firstName = data.firstName;
                 currentObj.lastName = data.lastName;
                 currentObj.role = data.role;
                 currentObj.userLogin = data.userLogin;
-                
+                currentObj.title = data.title;
+
                 console.log(currentObj);
                 dispatch(updateUser(currentObj));
+                dispatch(putUsersAPI(currentuserId,currentObj));
             } else {
                 dispatch(postUser({
-                    userID : data.userID,
-                    email : data.email,
-                    password : data.password,
-                    confirmPassword : data.confirmPassword,
-                    firstName : data.firstName,
-                    lastName : data.lastName,
-                    role : data.role,
-                    userLogin : data.userLogin,
+                    userId: data.userId,
+                    email: data.email,
+                    password: data.password,
+                    confirmPassword: data.confirmPassword,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: data.role,
+                    userLogin: data.userLogin,
+                    title: data.title,
                 }));
+                dispatch(postUsersAPI({
+                    userId: data.userId,
+                    email: data.email,
+                    password: data.password,
+                    confirmPassword: data.confirmPassword,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: data.role,
+                    userLogin: data.userLogin,
+                    title: data.title,
+                }))
             }
             reset();
         } catch (error) {
@@ -112,9 +127,9 @@ export default function General() {
             </Helmet>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Card sx={{ p: 2 }}>
-                <Stack flexDirection={"row"} alignItems={"center"}>
-                        <Typography variant='normal' sx={{ width: "33.333333%" }}> userID </Typography>
-                        <RHFTextField name="userID" label=""
+                    <Stack flexDirection={"row"} alignItems={"center"}>
+                        <Typography variant='normal' sx={{ width: "33.333333%" }}> userId </Typography>
+                        <RHFTextField name="userId" label=""
                             variant="outlined"
                             sx={{
                                 borderRadius: '10px',
@@ -125,7 +140,7 @@ export default function General() {
                                 },
                             }} />
                     </Stack>
-                <Stack flexDirection={"row"} alignItems={"center"}>
+                    <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> Email </Typography>
                         <RHFTextField name="email" label=""
                             variant="outlined"
@@ -138,58 +153,60 @@ export default function General() {
                                 },
                             }} />
                     </Stack>
-                    <Stack flexDirection={"row"} alignItems={"center"}>
-                        <Typography variant='normal' sx={{ width: "33.333333%" }}> Password </Typography>
+                    {location.pathname.includes("add") && <>
+                        <Stack flexDirection={"row"} alignItems={"center"}>
+                            <Typography variant='normal' sx={{ width: "33.333333%" }}> Password </Typography>
 
-                        <RHFTextField
-                            name="password"
-                            label=""
-                            type={showPassword ? 'text' : 'password'}
-                            sx={{
-                                borderRadius: '10px',
-                                marginBottom: "5px",
-                                width: "50%",
-                                '& .MuiOutlinedInput-input': {
-                                    padding: 1,
-                                },
-                            }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                            <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Stack>
-                    <Stack flexDirection={"row"} alignItems={"center"}>
-                        <Typography variant='normal' sx={{ width: "33.333333%" }}> Confirm Password </Typography>
+                            <RHFTextField
+                                name="password"
+                                label=""
+                                type={showPassword ? 'text' : 'password'}
+                                sx={{
+                                    borderRadius: '10px',
+                                    marginBottom: "5px",
+                                    width: "50%",
+                                    '& .MuiOutlinedInput-input': {
+                                        padding: 1,
+                                    },
+                                }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Stack>
+                        <Stack flexDirection={"row"} alignItems={"center"}>
+                            <Typography variant='normal' sx={{ width: "33.333333%" }}> Confirm Password </Typography>
 
-                        <RHFTextField
-                            name="confirmPassword"
-                            label=""
-                            type={showPassword ? 'text' : 'password'}
-                            sx={{
-                                borderRadius: '10px',
-                                marginBottom: "5px",
-                                width: "50%",
-                                '& .MuiOutlinedInput-input': {
-                                    padding: 1,
-                                },
-                            }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                            <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Stack>
+                            <RHFTextField
+                                name="confirmPassword"
+                                label=""
+                                type={showPassword ? 'text' : 'password'}
+                                sx={{
+                                    borderRadius: '10px',
+                                    marginBottom: "5px",
+                                    width: "50%",
+                                    '& .MuiOutlinedInput-input': {
+                                        padding: 1,
+                                    },
+                                }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Stack>
+                    </>}
                     <Stack flexDirection={"row"} alignItems={"center"}>
                         <Typography variant='normal' sx={{ width: "33.333333%" }}> First Name </Typography>
                         <RHFTextField name="firstName" label=""
@@ -242,7 +259,20 @@ export default function General() {
                                 },
                             }} />
                     </Stack>
-                    
+                    <Stack flexDirection={"row"} alignItems={"center"}>
+                        <Typography variant='normal' sx={{ width: "33.333333%" }}> Title </Typography>
+                        <RHFTextField name="title" label=""
+                            variant="outlined"
+                            sx={{
+                                borderRadius: '10px',
+                                marginBottom: "5px",
+                                width: "50%",
+                                '& .MuiOutlinedInput-input': {
+                                    padding: 1,
+                                },
+                            }} />
+                    </Stack>
+
 
                     <Stack flexDirection={"row"} alignItems={"center"} justifyContent="flex-end" sx={{ mt: 2, mr: "16%" }}>
                         <LoadingButton type="submit" variant="contained" loading={isSubmitting}>

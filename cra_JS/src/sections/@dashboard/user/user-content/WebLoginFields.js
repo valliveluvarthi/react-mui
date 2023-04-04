@@ -15,14 +15,14 @@ import FormProvider, {
 } from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
 export default function WebLoginFields() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList, currentUserID } = useSelector((state) => state.user);
+    const { user, usersList,usersAPIList, currentuserId } = useSelector((state) => state.user);
     const location = useLocation();
     useEffect(() => {
         if (user && Object.keys(user)?.length > 0) {
@@ -92,9 +92,9 @@ export default function WebLoginFields() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if (currentUserID) {
-                const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = { ...usersList[index] };
+            if (currentuserId) {
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
+                const currentObj = { ...usersAPIList[index] };
                 currentObj.custNoAllowed = data.custNoAllowed;
                 currentObj.chargeCustAllowed = data.chargeCustAllowed;
                 // currentObj.usStatsCustAllowed = data.usStatsCustAllowed;
@@ -111,32 +111,10 @@ export default function WebLoginFields() {
                 // currentObj.ISFDepartment = data.ISFDepartment;
                 console.log(currentObj);
                 dispatch(updateUser(currentObj));
-            } else {
-                dispatch(postUser({
-                    userID: usersList.length + 1,
-                    userLogin: `User ${usersList.length + 1}`,
-                    email: `user${usersList.length + 1}@gmail.com`,
-                    password: `Shapiro@2023`,
-                    confirmPassword: `Shapiro@2023`,
-                    programsToAccess: 0,
-                    custNoAllowed: data.custNoAllowed,
-                    chargeCustAllowed: data.chargeCustAllowed,
-                    firstName: `User ${usersList.length + 1}`,
-                    lastName: `User ${usersList.length + 1}`,
-                    role: `Admin`,
-                    // usStatsCustAllowed: data.usStatsCustAllowed,
-                    // chargeCust: data.chargeCust,
-                    // usExceptionCodes: data.usExceptionCodes,
-                    // usPartsCustNo: data.usPartsCustNo,
-                    // accountTeamMail: data.accountTeamMail,
-                    // usScannedDocsCustNo: data.usScannedDocsCustNo,
-                    // exportStatsCustNoAllowed: data.exportStatsCustNoAllowed,
-                    // exportBookingTemplateCustNo: data.exportBookingTemplateCustNo,
-                    // exportBookingNotifyEmailAddress: data.exportBookingNotifyEmailAddress,
-                    // ISFCustNo: data.ISFCustNo,
-                    // ISFBranch: data.ISFBranch,
-                    // ISFDepartment: data.ISFDepartment,
-                }));
+                dispatch(putUsersAPI(currentuserId, currentObj));
+            } 
+            else {
+                alert("Add General Tab Data");
             }
             reset();
         } catch (error) {

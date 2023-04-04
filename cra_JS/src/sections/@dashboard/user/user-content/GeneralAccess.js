@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
+import { useLocation } from 'react-router-dom';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -12,59 +13,106 @@ import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { postUser, updateUser } from '../../../../redux/slices/users';
+import { postUser, updateUser, putUsersAPI } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
 export default function GeneralAccess() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList, currentUserID } = useSelector((state) => state.user);
+    const { user, usersList,usersAPIList, currentuserId } = useSelector((state) => state.user);
+    const location = useLocation();
     useEffect(() => {
-        if (user && Object.keys(user)?.length > 0) {
-            setValue("AGENTBOOK", user.AGENTBOOK);
-            setValue("AGENTTEMP", user.AGENTTEMP);
-            setValue("AMAZFBA", user.AMAZFBA);
-            setValue("ARSTMT", user.ARSTMT);
-            setValue("BKAPPCN", user.BKAPPCN);
-            setValue("BMM_NEW", user.BMM_NEW);
-            setValue("BOOKACTION", user.BOOKACTION);
-            setValue("BOOKAPP", user.BOOKAPP);
-            setValue("CAM_BULK", user.CAM_BULK);
-            setValue("CLASSAD", user.CLASSAD);
-            setValue("CUSTPROF", user.CUSTPROF);
-            setValue("DASHCNFR", user.DASHCNFR);
-            setValue("DASHCONT", user.DASHCONT);
-            setValue("DASHDOAU", user.DASHDOAU);
-            setValue("DASHMQC", user.DASHMQC);
-            setValue("DASHORDT", user.DASHORDT);
-            setValue("DASHPOM", user.DASHPOM);
-            setValue("DASHSHIP", user.DASHSHIP);
-            setValue("DASHTEST", user.DASHTEST);
-            setValue("DASHTRAN", user.DASHTRAN);
-            setValue("EDASH", user.EDASH);
-            setValue("EXPBOOK", user.EXPBOOK);
-            setValue("EXPLIC", user.EXPLIC);
-            setValue("EXPTEMPL", user.EXPTEMPL);
-            setValue("EXPTRACK", user.EXPTRACK);
-            setValue("IMPPER", user.IMPPER);
-            setValue("ISFPORTAL", user.ISFPORTAL);
-            setValue("ISFTEMPL", user.ISFTEMPL);
-            setValue("IT", user.IT);
-            setValue("IT_CN", user.IT_CN);
-            setValue("LANDCOST", user.LANDCOST);
-            setValue("ONLINEPAY", user.ONLINEPAY);
-            setValue("PARTS", user.PARTS);
-            setValue("QUOTE", user.QUOTE);
-            setValue("REPORT", user.REPORT);
-            setValue("SAILADMIN", user.SAILADMIN);
-            setValue("SELECTSAIL", user.SELECTSAIL);
-            setValue("SHIPTRACK", user.SHIPTRACK);
-            setValue("SNAPSHOT", user.SNAPSHOT);
-            setValue("TRANDASH", user.TRANDASH);
-            setValue("TRUCKPORT", user.TRUCKPORT);
-            setValue("USP", user.USP);
-            setValue("WAREWITH", user.WAREWITH);
+        const hasKey = 'programsToAccess' in user;
+        if (user && Object.keys(user)?.length > 0 && hasKey) {
+            setValue("AGENTBOOK", user?.programsToAccess?.includes("AGENTBOOK"));
+            setValue("AGENTTEMP", user?.programsToAccess?.includes("AGENTTEMP"));
+            setValue("AMAZFBA", user?.programsToAccess?.includes("AMAZFBA"));
+            setValue("ARSTMT", user?.programsToAccess?.includes("ARSTMT"));
+            setValue("BKAPPCN", user?.programsToAccess?.includes("BKAPPCN"));
+            setValue("BMM_NEW", user?.programsToAccess?.includes("BMM_NEW"));
+            setValue("BOOKACTION", user?.programsToAccess?.includes("BOOKACTION"));
+            setValue("BOOKAPP", user?.programsToAccess?.includes("BOOKAPP"));
+            setValue("CAM_BULK", user?.programsToAccess?.includes("CAM_BULK"));
+            setValue("CLASSAD", user?.programsToAccess?.includes("CLASSAD"));
+            setValue("CUSTPROF", user?.programsToAccess?.includes("CUSTPROF"));
+            setValue("DASHCNFR", user?.programsToAccess?.includes("DASHCNFR"));
+            setValue("DASHCONT", user?.programsToAccess?.includes("DASHCONT"));
+            setValue("DASHDOAU", user?.programsToAccess?.includes("DASHDOAU"));
+            setValue("DASHMQC", user?.programsToAccess?.includes("DASHMQC"));
+            setValue("DASHORDT", user?.programsToAccess?.includes("DASHORDT"));
+            setValue("DASHPOM", user?.programsToAccess?.includes("DASHPOM"));
+            setValue("DASHSHIP", user?.programsToAccess?.includes("DASHSHIP"));
+            setValue("DASHTEST", user?.programsToAccess?.includes("DASHTEST"));
+            setValue("DASHTRAN", user?.programsToAccess?.includes("DASHTRAN"));
+            setValue("EDASH", user?.programsToAccess?.includes("EDASH"));
+            setValue("EXPBOOK", user?.programsToAccess?.includes("EXPBOOK"));
+            setValue("EXPLIC", user?.programsToAccess?.includes("EXPLIC"));
+            setValue("EXPTEMPL", user?.programsToAccess?.includes("EXPTEMPL"));
+            setValue("EXPTRACK", user?.programsToAccess?.includes("EXPTRACK"));
+            setValue("IMPPER", user?.programsToAccess?.includes("IMPPER"));
+            setValue("ISFPORTAL", user?.programsToAccess?.includes("ISFPORTAL"));
+            setValue("ISFTEMPL", user?.programsToAccess?.includes("ISFTEMPL"));
+            setValue("IT", user?.programsToAccess?.includes("IT"));
+            setValue("IT_CN", user?.programsToAccess?.includes("IT_CN"));
+            setValue("LANDCOST", user?.programsToAccess?.includes("LANDCOST"));
+            setValue("ONLINEPAY", user?.programsToAccess?.includes("ONLINEPAY"));
+            setValue("PARTS", user?.programsToAccess?.includes("PARTS"));
+            setValue("QUOTE", user?.programsToAccess?.includes("QUOTE"));
+            setValue("REPORT", user?.programsToAccess?.includes("REPORT"));
+            setValue("SAILADMIN", user?.programsToAccess?.includes("SAILADMIN"));
+            setValue("SELECTSAIL", user?.programsToAccess?.includes("SELECTSAIL"));
+            setValue("SHIPTRACK", user?.programsToAccess?.includes("SHIPTRACK"));
+            setValue("SNAPSHOT", user?.programsToAccess?.includes("SNAPSHOT"));
+            setValue("TRANDASH", user?.programsToAccess?.includes("TRANDASH"));
+            setValue("TRUCKPORT", user?.programsToAccess?.includes("TRUCKPORT"));
+            setValue("USP", user?.programsToAccess?.includes("USP"));
+            setValue("WAREWITH", user?.programsToAccess?.includes("WAREWITH"));
+        }
+        if (user && Object.keys(user)?.length > 0 && !hasKey) {
+            setValue("AGENTBOOK", user?.AGENTBOOK);
+            setValue("AGENTTEMP", user?.AGENTTEMP);
+            setValue("AMAZFBA", user?.AMAZFBA);
+            setValue("ARSTMT", user?.ARSTMT);
+            setValue("BKAPPCN", user?.BKAPPCN);
+            setValue("BMM_NEW", user?.BMM_NEW);
+            setValue("BOOKACTION", user?.BOOKACTION);
+            setValue("BOOKAPP", user?.BOOKAPP);
+            setValue("CAM_BULK", user?.CAM_BULK);
+            setValue("CLASSAD", user?.CLASSAD);
+            setValue("CUSTPROF", user?.CUSTPROF);
+            setValue("DASHCNFR", user?.DASHCNFR);
+            setValue("DASHCONT", user?.DASHCONT);
+            setValue("DASHDOAU", user?.DASHDOAU);
+            setValue("DASHMQC", user?.DASHMQC);
+            setValue("DASHORDT", user?.DASHORDT);
+            setValue("DASHPOM", user?.DASHPOM);
+            setValue("DASHSHIP", user?.DASHSHIP);
+            setValue("DASHTEST", user?.DASHTEST);
+            setValue("DASHTRAN", user?.DASHTRAN);
+            setValue("EDASH", user?.EDASH);
+            setValue("EXPBOOK", user?.EXPBOOK);
+            setValue("EXPLIC", user?.EXPLIC);
+            setValue("EXPTEMPL", user?.EXPTEMPL);
+            setValue("EXPTRACK", user?.EXPTRACK);
+            setValue("IMPPER", user?.IMPPER);
+            setValue("ISFPORTAL", user?.ISFPORTAL);
+            setValue("ISFTEMPL", user?.ISFTEMPL);
+            setValue("IT", user?.IT);
+            setValue("IT_CN", user?.IT_CN);
+            setValue("LANDCOST", user?.LANDCOST);
+            setValue("ONLINEPAY", user?.ONLINEPAY);
+            setValue("PARTS", user?.PARTS);
+            setValue("QUOTE", user?.QUOTE);
+            setValue("REPORT", user?.REPORT);
+            setValue("SAILADMIN", user?.SAILADMIN);
+            setValue("SELECTSAIL", user?.SELECTSAIL);
+            setValue("SHIPTRACK", user?.SHIPTRACK);
+            setValue("SNAPSHOT", user?.SNAPSHOT);
+            setValue("TRANDASH", user?.TRANDASH);
+            setValue("TRUCKPORT", user?.TRUCKPORT);
+            setValue("USP", user?.USP);
+            setValue("WAREWITH", user?.WAREWITH);
         }
     }, [user]);
     const GeneralAccessFormSchema = Yup.object().shape({
@@ -174,9 +222,9 @@ export default function GeneralAccess() {
     const values = watch();
     const onSubmit = async (data) => {
         try {
-            if (currentUserID) {
-                const index = usersList?.findIndex((col) => col.userID === currentUserID);
-                const currentObj = { ...usersList[index] };
+            if (currentuserId) {
+                const index = usersAPIList?.findIndex((col) => col.id === currentuserId);
+                const currentObj = { ...usersAPIList[index] };
                 currentObj.AGENTBOOK = data.AGENTBOOK;
                 currentObj.AGENTTEMP = data.AGENTTEMP;
                 currentObj.AMAZFBA = data.AMAZFBA;
@@ -221,74 +269,24 @@ export default function GeneralAccess() {
                 currentObj.USP = data.USP;
                 currentObj.WAREWITH = data.WAREWITH;
                 console.log(currentObj);
-                const keys = Object.keys(currentObj);
-
-                const filtered = keys.filter((key) => {
-                    return currentObj[key]
-                });
-                console.log(filtered);
-                dispatch(updateUser(currentObj));
-            } else {
                 const keys = Object.keys(data);
 
                 const filtered = keys.filter((key) => {
                     return data[key]
                 });
                 console.log(filtered);
-                dispatch(postUser({
-                    userID: usersList.length + 1,
-                    userLogin: `User ${usersList.length + 1}`,
-                    email: `user${usersList.length + 1}@gmail.com`,
-                    password: `Shapiro@2023`,
-                    confirmPassword: `Shapiro@2023`,
-                    programsToAccess: 0,
-                    firstName: `User ${usersList.length + 1}`,
-                    lastName: `User ${usersList.length + 1}`,
-                    role: `Admin`,
-                    AGENTBOOK: data.AGENTBOOK,
-                    AGENTTEMP: data.AGENTTEMP,
-                    AMAZFBA: data.AMAZFBA,
-                    ARSTMT: data.ARSTMT,
-                    BKAPPCN: data.BKAPPCN,
-                    BMM_NEW: data.BMM_NEW,
-                    BOOKACTION: data.BOOKACTION,
-                    BOOKAPP: data.BOOKAPP,
-                    CAM_BULK: data.CAM_BULK,
-                    CLASSAD: data.CLASSAD,
-                    CUSTPROF: data.CUSTPROF,
-                    DASHCNFR: data.DASHCNFR,
-                    DASHCONT: data.DASHCONT,
-                    DASHDOAU: data.DASHDOAU,
-                    DASHMQC: data.DASHMQC,
-                    DASHORDT: data.DASHORDT,
-                    DASHPOM: data.DASHPOM,
-                    DASHSHIP: data.DASHSHIP,
-                    DASHTEST: data.DASHTEST,
-                    DASHTRAN: data.DASHTRAN,
-                    EDASH: data.EDASH,
-                    EXPBOOK: data.EXPBOOK,
-                    EXPLIC: data.EXPLIC,
-                    EXPTEMPL: data.EXPTEMPL,
-                    EXPTRACK: data.EXPTRACK,
-                    IMPPER: data.IMPPER,
-                    ISFPORTAL: data.ISFPORTAL,
-                    ISFTEMPL: data.ISFTEMPL,
-                    IT: data.IT,
-                    IT_CN: data.IT_CN,
-                    LANDCOST: data.LANDCOST,
-                    ONLINEPAY: data.ONLINEPAY,
-                    PARTS: data.PARTS,
-                    QUOTE: data.QUOTE,
-                    REPORT: data.REPORT,
-                    SAILADMIN: data.SAILADMIN,
-                    SELECTSAIL: data.SELECTSAIL,
-                    SHIPTRACK: data.SHIPTRACK,
-                    SNAPSHOT: data.SNAPSHOT,
-                    TRANDASH: data.TRANDASH,
-                    TRUCKPORT: data.TRUCKPORT,
-                    USP: data.USP,
-                    WAREWITH: data.WAREWITH,
-                }))
+                const filteredString = filtered.join(",");
+                
+                const currentObjAPICopy = { ...usersAPIList[index] };
+                currentObjAPICopy.programsToAccess = filteredString;
+                if(currentObjAPICopy === null){
+                    currentObjAPICopy.pomRoles = "";
+                }
+                // dispatch(updateUser(currentObj));
+                dispatch(updateUser(currentObjAPICopy));
+                dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+            } else {
+                alert("Add General Tab Data");
             }
             reset();
         } catch (error) {

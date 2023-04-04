@@ -10,7 +10,7 @@ import { useSettingsContext } from '../../components/settings';
 import Iconify from '../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getUser, deleteUser } from '../../redux/slices/users';
+import { getUser, deleteUser, getUsersAPI, deleteUsersAPI } from '../../redux/slices/users';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 
@@ -20,10 +20,10 @@ export default function CurrentUsersPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
-  const { usersList } = useSelector((state) => state.user);
+  const { usersList, usersAPIList } = useSelector((state) => state.user);
 
   const columns = [
-    { field: 'userID', headerName: 'User ID', width: 100 },
+    { field: 'userId', headerName: 'User ID', width: 100 },
     {
       field: 'userLogin',
       headerName: 'User Login',
@@ -67,7 +67,8 @@ export default function CurrentUsersPage() {
                   icon="ic:baseline-delete"
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
-                   dispatch(deleteUser(params?.row?.userID))
+                   dispatch(deleteUser(params?.row?.id))
+                   dispatch(deleteUsersAPI(params?.row?.id))
                   }}
                 />
               </>
@@ -77,7 +78,10 @@ export default function CurrentUsersPage() {
         return element;
       },
     },
-  ];
+  ]; 
+  useEffect(() => {
+    dispatch(getUsersAPI());
+  }, []);
   return (
     <>
       <Helmet>
@@ -88,7 +92,7 @@ export default function CurrentUsersPage() {
         <Typography variant="h6"> Current Users </Typography>
         <Box sx={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={usersList}
+            rows={usersAPIList}
             columns={columns}
             initialState={{
               pagination: {
@@ -97,7 +101,7 @@ export default function CurrentUsersPage() {
                 },
               },
             }}
-            getRowId={(row) => row?.userID}
+            getRowId={(row) => row?.userId || row?.id}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
           />
