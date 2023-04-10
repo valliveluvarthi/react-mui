@@ -1,131 +1,92 @@
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { Helmet } from 'react-helmet-async';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Stack, Button, Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Container, Grid, Stack, Button, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-// auth
-import { useAuthContext } from '../../auth/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // components
 import { useSettingsContext } from '../../components/settings';
-// sections
-
 import Iconify from '../../components/iconify';
-// assets
-import { SeoIllustration } from '../../assets/illustrations';
+// redux
+import { useDispatch, useSelector } from '../../redux/store';
+import { getUser, deleteUser, getUsersAPI, deleteUsersAPI } from '../../redux/slices/users';
+// routes
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
-const columns = [
-  { field: 'userId', headerName: 'User ID', width: 100 },
-  {
-    field: 'userLogin',
-    headerName: 'User Login',
-    width: 200,
-    editable: true,
-    align: 'left',
-  },
-  {
-    field: 'emailAddress',
-    headerName: 'User Email Address',
-    width: 200,
-    editable: true,
-    align: 'left',
-  },
-  {
-    field: 'programsToAccess',
-    headerName: 'Programs To Access',
-    width: 200,
-    editable: true,
-    align: 'left',
-  },  
-  // {
-
-  //   field: 'actions',
-
-  //   headerName: 'Actions',
-
-  //   width: 150,
-
-  //   align: 'left',
-
-  //   renderCell: (params) => {
-
-  //     const element = (
-
-  //       <>
-
-  //         <Stack flexDirection={'row'} alignItems="center">
-
-
-
-
-
-  //           <>
-
-  //             <Iconify
-
-  //               icon="material-symbols:edit-square-outline"
-
-  //               sx={{ cursor: 'pointer', mr: 1 }}
-
-  //             />
-
-  //             <Iconify
-
-  //               icon="ic:baseline-delete"
-
-  //               sx={{ cursor: 'pointer' }}
-
-  //             />
-
-  //           </>
-
-
-
-  //         </Stack>
-
-  //       </>
-
-  //     );
-
-  //     return element;
-
-  //   },
-
-  // },
-];
-
-const rows = [
-  { userId: 1, userLogin: 'Mike', emailAddress: 'Mike@gmail.com', programsToAccess: 35 },
-  { userId: 2, userLogin: 'Russel', emailAddress: 'Russel@gmail.com', programsToAccess: 35 },
-  { userId: 3, userLogin: 'Rodolfo', emailAddress: 'Rodolfo@gmail.com', programsToAccess: 35 },
-  { userId: 4, userLogin: 'Chandu', emailAddress: 'Chandu@gmail.com', programsToAccess: 35 },
-  { userId: 5, userLogin: 'Pulkit', emailAddress: 'Pulkit@gmail.com', programsToAccess: 35 },
-  { userId: 6, userLogin: 'Praveen', emailAddress: 'Praveen@gmail.com', programsToAccess: 35 },
-  { userId: 7, userLogin: 'Uvashri', emailAddress: 'Uvashri@gmail.com', programsToAccess: 35 },
-  { userId: 8, userLogin: 'Swathika', emailAddress: 'Swathika@gmail.com', programsToAccess: 35 },
-  { userId: 9, userLogin: 'Yolonda', emailAddress: 'Yolonda@gmail.com', programsToAccess: 35 },
-  { userId: 10, userLogin: 'Erik', emailAddress: 'Erik@gmail.com', programsToAccess: 35 },
-];
-
-export default function GeneralAppPage() {
-  const { user } = useAuthContext();
-
-  const theme = useTheme();
-
+export default function CurrentUsersPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
+  const { usersList, usersAPIList, alertMessage } = useSelector((state) => state.user);
+  const [selectedParams, setSelectedParams] = useState(null);
+  const columns = [
+    { field: 'userId', headerName: 'User ID', width: 100 },
+    {
+      field: 'userLogin',
+      headerName: 'User Login',
+      width: 200,
+      editable: true,
+      align: 'left',
+    },
+    {
+      field: 'email',
+      headerName: 'User Email Address',
+      width: 200,
+      editable: true,
+      align: 'left',
+    },
+    {
+      field: 'programsToAccess',
+      headerName: 'Programs To Access',
+      width: 250,
+      editable: true,
+      align: 'left',
+      renderCell: (params) => {
+        const element = (
+          <Box title = {params?.row?.programsToAccess}>
+            {params?.row?.programsToAccess}
+          </Box>
+        );
+        return element;
+      },
+    },
+    {
+      field: 'pomRoles',
+      headerName: 'POM Roles',
+      width: 250,
+      editable: true,
+      align: 'left',
+      renderCell: (params) => {
+        const element = (
+          <Box title = {params?.row?.pomRoles}>
+            {params?.row?.pomRoles}
+          </Box>
+        );
+        return element;
+      },
+    },
+  ];
+  useEffect(() => {
+    dispatch(getUsersAPI());
+  }, []);
 
   return (
     <>
       <Helmet>
-        <title> General: Dashboard | Shapiro 360</title>
+        <title> Dashboard | Shapiro 360</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
+        <Typography variant="h6"> Current Users </Typography>
         <Box sx={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={rows}
+            rows={usersAPIList}
             columns={columns}
             initialState={{
               pagination: {
@@ -134,9 +95,8 @@ export default function GeneralAppPage() {
                 },
               },
             }}
-            getRowId={(row) => row?.userId}
+            getRowId={(row) => row?.userId || row?.id}
             pageSizeOptions={[5]}
-            // checkboxSelection
             disableRowSelectionOnClick
           />
         </Box>

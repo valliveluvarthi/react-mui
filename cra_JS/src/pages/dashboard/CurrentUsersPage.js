@@ -44,9 +44,17 @@ export default function CurrentUsersPage() {
     {
       field: 'programsToAccess',
       headerName: 'Programs To Access',
-      width: 200,
+      width: 250,
       editable: true,
       align: 'left',
+      renderCell: (params) => {
+        const element = (
+          <Box title={params?.row?.programsToAccess}>
+            {params?.row?.programsToAccess}
+          </Box>
+        );
+        return element;
+      },
     },
     {
       field: 'actions',
