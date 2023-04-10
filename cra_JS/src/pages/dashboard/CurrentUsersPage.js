@@ -1,7 +1,10 @@
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { useState, useEffect } from 'react';
-import { Container, Grid, Stack, Button, Box, Typography } from '@mui/material';
+import { Container, Grid, Stack, Button, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,8 +23,8 @@ export default function CurrentUsersPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
-  const { usersList, usersAPIList } = useSelector((state) => state.user);
-
+  const { usersList, usersAPIList, alertMessage } = useSelector((state) => state.user);
+  const [selectedParams, setSelectedParams] = useState(null);
   const columns = [
     { field: 'userId', headerName: 'User ID', width: 100 },
     {
@@ -67,8 +70,8 @@ export default function CurrentUsersPage() {
                   icon="ic:baseline-delete"
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
-                   dispatch(deleteUser(params?.row?.id))
-                   dispatch(deleteUsersAPI(params?.row?.id))
+                    setOpenDialog(true);
+                    setSelectedParams(params);
                   }}
                 />
               </>
@@ -78,10 +81,69 @@ export default function CurrentUsersPage() {
         return element;
       },
     },
-  ]; 
+  ];
   useEffect(() => {
     dispatch(getUsersAPI());
   }, []);
+  // snackbar
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setState({ ...state, open: false });
+  };
+  useEffect(() => {
+    if (alertMessage) {
+      // const newState = {
+      //   vertical: 'top',
+      //   horizontal: 'center',
+      // };
+      // setState({ open: true, ...newState });
+      console.log(alertMessage);
+    }
+  }, [alertMessage]);
+  const action = (
+    <>
+      {/* <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button> */}
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <Iconify icon="eva:close-fill" />
+      </IconButton>
+    </>
+  );
+
+  // dialog details
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+  const handleCloseWithYesDialog = () => {
+    dispatch(deleteUser(selectedParams?.row?.id))
+    dispatch(deleteUsersAPI(selectedParams?.row?.id, selectedParams?.row?.auth0Id));
+    const newState = {
+      vertical: 'top',
+      horizontal: 'center',
+    };
+    setState({ open: true, ...newState });
+    setOpenDialog(false);
+  };
+
+
   return (
     <>
       <Helmet>
@@ -107,6 +169,38 @@ export default function CurrentUsersPage() {
           />
         </Box>
       </Container>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure, you want to delete?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={handleCloseWithYesDialog} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        key={vertical + horizontal}
+        // message={alertMessage}
+        message="User Deleted"
+        autoHideDuration={3500}
+        action={action}
+      />
     </>
   );
 }

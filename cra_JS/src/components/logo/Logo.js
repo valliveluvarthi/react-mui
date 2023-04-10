@@ -76,6 +76,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
         src={`https://th.bing.com/th?id=AMMS_dd6dd9d5bdf01517ec66304ace6b1b5a&w=72&h=72&c=7&rs=1&qlt=80&o=6&cdv=1&dpr=1.5&pid=16.1`}
         alt={"Shapiro 360"}
         loading="lazy"
+        style={{borderRadius : "50%"}}
       />
     </Box>
   );

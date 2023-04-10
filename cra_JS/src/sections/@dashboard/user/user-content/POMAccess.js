@@ -1,16 +1,20 @@
+import * as React from 'react';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet-async';
 // @mui
-import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox } from '@mui/material';
+import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox, IconButton, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useLocation } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // components
 import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
+import Iconify from '../../../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redux/slices/users';
@@ -18,11 +22,41 @@ import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redu
 
 
 // ----------------------------------------------------------------------
+
+const Alert = React.forwardRef((props, ref) => {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function POMAccess() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
     const location = useLocation();
-    const { user, usersList, usersAPIList, currentuserId } = useSelector((state) => state.user);
+    const { user, usersList, usersAPIList, currentuserId, alertMessage } = useSelector((state) => state.user);
+    // snackbar
+    const [state, setState] = React.useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setState({ ...state, open: false });
+    };
+    useEffect(() => {
+        if (alertMessage) {
+            // const newState = {
+            //     vertical: 'top',
+            //     horizontal: 'center',
+            // };
+            // setState({ open: true, ...newState });
+            console.log(alertMessage);
+        }
+    }, [alertMessage]);
     useEffect(() => {
         const hasKey = 'pomRoles' in user;
         if (user && Object.keys(user)?.length > 0 && hasKey) {
@@ -131,17 +165,40 @@ export default function POMAccess() {
                     currentObjAPICopy.pomRoles = filteredString;
                     dispatch(updateUser(currentObjAPICopy));
                     dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+                    const newState = {
+                        vertical: 'top',
+                        horizontal: 'center',
+                    };
+                    setState({ open: true, ...newState });
+                    setTimeout(() => {
+                        dispatch(getUsersAPI());
+                    }, 3000);
                 }
             } else {
                 alert("Add General Tab Data");
             }
-            if(location.pathname.includes("add")){
+            if (location.pathname.includes("add")) {
                 reset();
             }
         } catch (error) {
             console.error(error);
         }
     };
+    const action = (
+        <>
+            {/* <Button color="secondary" size="small" onClick={handleClose}>
+            UNDO
+          </Button> */}
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <Iconify icon="eva:close-fill" />
+            </IconButton>
+        </>
+    );
     return (
         <>
             <Helmet>
@@ -179,6 +236,15 @@ export default function POMAccess() {
                     </Stack>
                 </Card>
             </FormProvider>
+            <Snackbar anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                key={vertical + horizontal}
+                // message={alertMessage}
+                message={(currentuserId) ? "User Updated" : "Try Again"}
+                autoHideDuration={3500}
+                action={action}
+            />
         </>
     );
 }

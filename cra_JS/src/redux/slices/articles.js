@@ -9,6 +9,7 @@ import { dispatch } from '../store';
 const initialState = {
   isLoading: false,
   error: null,
+  alertMessage : "",
   article: {
     category: "",
     name: "",
@@ -37,6 +38,7 @@ const slice = createSlice({
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
+      state.alertMessage = action.payload.message;
     },
 
     // GET EVENTS
@@ -71,7 +73,17 @@ const slice = createSlice({
       state.isLoading = false;
       state.articlesList = action.payload;
       state.currentArticleID = action.payload[action.payload.length - 1].id;
-    }
+      state.alertMessage = "";
+    },
+    postArticlesAPISuccess(state, action) {
+      state.alertMessage = action.payload.message;
+    },
+    putArticlesAPISuccess(state, action) {
+      state.alertMessage = action.payload.message;
+    },
+    deleteArticlesAPISuccess(state, action) {
+      state.alertMessage = action.payload.message;
+    },
   },
 });
 
@@ -144,11 +156,15 @@ export function getArticlesAPI() {
   };
 
 }
+
+
+
 export function postArticlesAPI(postObj) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.post(`/articles`, postObj);
+      dispatch(slice.actions.postArticlesAPISuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -160,6 +176,7 @@ export function putArtilcesAPI(id, putObj) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.put(`/articles/${id}`, putObj);
+      dispatch(slice.actions.putArticlesAPISuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -171,6 +188,7 @@ export function deleteArticlesAPI(id) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.delete(`/articles/${id}`);
+      dispatch(slice.actions.deleteArticlesAPISuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

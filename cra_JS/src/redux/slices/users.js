@@ -9,8 +9,8 @@ import { dispatch } from '../store';
 const initialState = {
   isLoading: false,
   error: null,
-
-
+  alertMessage : "",
+  currentauth0Id : "",
   user: {
     id: "",
     userId: "", userLogin: '',
@@ -20,7 +20,7 @@ const initialState = {
     lastName: "",
     role: "",
     title:"",
-
+    username:"",
     custNoAllowed: "",
     chargeCustAllowed: "",
     // usStatsCustAllowed: "",
@@ -404,12 +404,14 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
+      state.alertMessage = "";
     },
 
     // HAS ERROR
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
+      state.alertMessage = action.payload.message;
     },
 
     // GET EVENTS
@@ -418,11 +420,13 @@ const slice = createSlice({
       state.user = action.payload;
       console.log(state.user.id);
       state.currentuserId = action.payload.id;
+      state.currentauth0Id = (action.payload?.auth0Id) ? action.payload?.auth0Id : "";
     },
     postUserSuccess(state, action) {
       state.isLoading = false;
       state.usersAPIList.push(action.payload);
       state.currentuserId = action.payload.userId;
+      state.currentauth0Id = (action.payload?.auth0Id) ? action.payload?.auth0Id : "";
       // state.user = initialState.user;
     },
     updateUserSuccess(state, action) {
@@ -445,13 +449,18 @@ const slice = createSlice({
     getUsersAPISuccess(state, action) {
       state.isLoading = false;
       state.usersAPIList = action.payload;
+      state.alertMessage = "";
       state.currentuserId = action.payload[action.payload.length - 1].id;
+      state.currentauth0Id = (action.payload[action.payload.length - 1]?.auth0Id) ? action.payload[action.payload.length - 1].auth0Id : "";
     },
     postUsersAPISuccess(state, action) {
-
+      state.alertMessage = action.payload.message;
     },
     putUsersAPISuccess(state, action) {
-
+      state.alertMessage = action.payload.message;
+    },
+    deleteUsersAPISuccess(state, action) {
+      state.alertMessage = action.payload.message;
     },
   },
 });
@@ -552,11 +561,12 @@ export function putUsersAPI(id, putObj) {
   };
 
 }
-export function deleteUsersAPI(id) {
+export function deleteUsersAPI(id,auth0Id) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.delete(`/users/${id}`);
+      const response = await axios.delete(`/users/${id}`,{data:{auth0Id}});
+      dispatch(slice.actions.deleteUsersAPISuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

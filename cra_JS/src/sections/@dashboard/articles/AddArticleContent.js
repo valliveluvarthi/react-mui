@@ -1,10 +1,13 @@
+import * as React from 'react';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet-async';
 // @mui
-import { Container, Typography, Grid, Card, Stack, InputAdornment, IconButton } from '@mui/material';
+import { Container, Typography, Grid, Card, Stack, InputAdornment, IconButton, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useLocation } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -23,7 +26,7 @@ export default function AddUserContent() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
     const location = useLocation();
-    const { article, articlesList, currentArticleID } = useSelector((state) => state.article);
+    const { article, articlesList, currentArticleID, alertMessage } = useSelector((state) => state.article);
     useEffect(() => {
         if (location.pathname.includes("add")) {
             dispatch(clearArticle({
@@ -114,6 +117,11 @@ export default function AddUserContent() {
                 console.log(currentObj);
                 dispatch(updateArticle(currentObj));
                 dispatch(putArtilcesAPI(currentArticleID, currentObj));
+                const newState = {
+                    vertical: 'top',
+                    horizontal: 'center',
+                };
+                setState({ open: true, ...newState });
                 setTimeout(() => {
                     dispatch(getArticlesAPI());
                 }, 3000);
@@ -143,6 +151,11 @@ export default function AddUserContent() {
                     pageSeq: data.pageSeq,
                     newModal: data.newModal,
                 }));
+                const newState = {
+                    vertical: 'top',
+                    horizontal: 'center',
+                };
+                setState({ open: true, ...newState });
                 setTimeout(() => {
                     dispatch(getArticlesAPI());
                 }, 3000);
@@ -152,6 +165,46 @@ export default function AddUserContent() {
             console.error(error);
         }
     };
+    // snackbar
+    const [state, setState] = React.useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setState({ ...state, open: false });
+    };
+
+    const action = (
+        <>
+            {/* <Button color="secondary" size="small" onClick={handleClose}>
+            UNDO
+          </Button> */}
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <Iconify icon="eva:close-fill" />
+            </IconButton>
+        </>
+    );
+    useEffect(() => {
+        if (alertMessage) {
+            // const newState = {
+            //     vertical: 'top',
+            //     horizontal: 'center',
+            // };
+            // setState({ open: true, ...newState });
+        }
+    }, [alertMessage]);
     return (
         <>
             <Helmet>
@@ -308,6 +361,15 @@ export default function AddUserContent() {
                     </Stack>
                 </Card>
             </FormProvider>
+            <Snackbar anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                key={vertical + horizontal}
+                // message={alertMessage}
+                message={(location.pathname.includes("edit")) ? "Article Updated" : "Article Created"}
+                autoHideDuration={3500}
+                action={action}
+            />
         </>
     );
 }

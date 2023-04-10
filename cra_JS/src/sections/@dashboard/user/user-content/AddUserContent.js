@@ -25,7 +25,7 @@ export default function AddUserContent() {
                 lastName: "",
                 role: "",
                 title : "",
-
+                username : "",
                 custNoAllowed: "",
                 chargeCustAllowed: "",
                 // usStatsCustAllowed: "",

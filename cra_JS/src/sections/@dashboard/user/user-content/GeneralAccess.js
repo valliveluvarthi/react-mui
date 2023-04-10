@@ -1,27 +1,61 @@
+import * as React from 'react';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet-async';
 // @mui
-import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox } from '@mui/material';
+import { Container, Typography, Grid, Card, Stack, FormControlLabel, Checkbox, IconButton, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useLocation } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // components
 import { useSettingsContext } from '../../../../components/settings';
 import FormProvider from '../../../../components/hook-form';
+import Iconify from '../../../../components/iconify';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { postUser, updateUser, putUsersAPI, getUsersAPI } from '../../../../redux/slices/users';
 
 
 // ----------------------------------------------------------------------
+
+const Alert = React.forwardRef((props, ref) => {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function GeneralAccess() {
     const { themeStretch } = useSettingsContext();
     const dispatch = useDispatch();
-    const { user, usersList,usersAPIList, currentuserId } = useSelector((state) => state.user);
+    const { user, usersList, usersAPIList, currentuserId, alertMessage } = useSelector((state) => state.user);
     const location = useLocation();
+    // snackbar
+    const [state, setState] = React.useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setState({ ...state, open: false });
+    };
+    useEffect(() => {
+        if (alertMessage) {
+            // const newState = {
+            //     vertical: 'top',
+            //     horizontal: 'center',
+            // };
+            // setState({ open: true, ...newState });
+            console.log(alertMessage);
+        }
+    }, [alertMessage]);
     useEffect(() => {
         const hasKey = 'programsToAccess' in user;
         if (user && Object.keys(user)?.length > 0 && hasKey) {
@@ -117,7 +151,7 @@ export default function GeneralAccess() {
     }, [user]);
     useEffect(() => {
         dispatch(getUsersAPI());
-     }, []);
+    }, []);
     const GeneralAccessFormSchema = Yup.object().shape({
         AGENTBOOK: Yup.bool(),
         AGENTTEMP: Yup.bool(),
@@ -228,78 +262,101 @@ export default function GeneralAccess() {
             if (currentuserId) {
                 const index = usersAPIList?.findIndex((col) => col.id === currentuserId || col.userId === currentuserId);
                 if (index > 0 || index === 0) {
-                const currentObj = { ...usersAPIList[index] };
-                currentObj.AGENTBOOK = data.AGENTBOOK;
-                currentObj.AGENTTEMP = data.AGENTTEMP;
-                currentObj.AMAZFBA = data.AMAZFBA;
-                currentObj.ARSTMT = data.ARSTMT;
-                currentObj.BKAPPCN = data.BKAPPCN;
-                currentObj.BMM_NEW = data.BMM_NEW;
-                currentObj.BOOKACTION = data.BOOKACTION;
-                currentObj.BOOKAPP = data.BOOKAPP;
-                currentObj.CAM_BULK = data.CAM_BULK;
-                currentObj.CLASSAD = data.CLASSAD;
-                currentObj.CUSTPROF = data.CUSTPROF;
-                currentObj.DASHCNFR = data.DASHCNFR;
-                currentObj.DASHCONT = data.DASHCONT;
-                currentObj.DASHDOAU = data.DASHDOAU;
-                currentObj.DASHMQC = data.DASHMQC;
-                currentObj.DASHORDT = data.DASHORDT;
-                currentObj.DASHPOM = data.DASHPOM;
-                currentObj.DASHSHIP = data.DASHSHIP;
-                currentObj.DASHTEST = data.DASHTEST;
-                currentObj.DASHTRAN = data.DASHTRAN;
-                currentObj.EDASH = data.EDASH;
-                currentObj.EXPBOOK = data.EXPBOOK;
-                currentObj.EXPLIC = data.EXPLIC;
-                currentObj.EXPTEMPL = data.EXPTEMPL;
-                currentObj.EXPTRACK = data.EXPTRACK;
-                currentObj.IMPPER = data.IMPPER;
-                currentObj.ISFPORTAL = data.ISFPORTAL;
-                currentObj.ISFTEMPL = data.ISFTEMPL;
-                currentObj.IT = data.IT;
-                currentObj.IT_CN = data.IT_CN;
-                currentObj.LANDCOST = data.LANDCOST;
-                currentObj.ONLINEPAY = data.ONLINEPAY;
-                currentObj.PARTS = data.PARTS;
-                currentObj.QUOTE = data.QUOTE;
-                currentObj.REPORT = data.REPORT;
-                currentObj.SAILADMIN = data.SAILADMIN;
-                currentObj.SELECTSAIL = data.SELECTSAIL;
-                currentObj.SHIPTRACK = data.SHIPTRACK;
-                currentObj.SNAPSHOT = data.SNAPSHOT;
-                currentObj.TRANDASH = data.TRANDASH;
-                currentObj.TRUCKPORT = data.TRUCKPORT;
-                currentObj.USP = data.USP;
-                currentObj.WAREWITH = data.WAREWITH;
-                console.log(currentObj);
-                const keys = Object.keys(data);
+                    const currentObj = { ...usersAPIList[index] };
+                    currentObj.AGENTBOOK = data.AGENTBOOK;
+                    currentObj.AGENTTEMP = data.AGENTTEMP;
+                    currentObj.AMAZFBA = data.AMAZFBA;
+                    currentObj.ARSTMT = data.ARSTMT;
+                    currentObj.BKAPPCN = data.BKAPPCN;
+                    currentObj.BMM_NEW = data.BMM_NEW;
+                    currentObj.BOOKACTION = data.BOOKACTION;
+                    currentObj.BOOKAPP = data.BOOKAPP;
+                    currentObj.CAM_BULK = data.CAM_BULK;
+                    currentObj.CLASSAD = data.CLASSAD;
+                    currentObj.CUSTPROF = data.CUSTPROF;
+                    currentObj.DASHCNFR = data.DASHCNFR;
+                    currentObj.DASHCONT = data.DASHCONT;
+                    currentObj.DASHDOAU = data.DASHDOAU;
+                    currentObj.DASHMQC = data.DASHMQC;
+                    currentObj.DASHORDT = data.DASHORDT;
+                    currentObj.DASHPOM = data.DASHPOM;
+                    currentObj.DASHSHIP = data.DASHSHIP;
+                    currentObj.DASHTEST = data.DASHTEST;
+                    currentObj.DASHTRAN = data.DASHTRAN;
+                    currentObj.EDASH = data.EDASH;
+                    currentObj.EXPBOOK = data.EXPBOOK;
+                    currentObj.EXPLIC = data.EXPLIC;
+                    currentObj.EXPTEMPL = data.EXPTEMPL;
+                    currentObj.EXPTRACK = data.EXPTRACK;
+                    currentObj.IMPPER = data.IMPPER;
+                    currentObj.ISFPORTAL = data.ISFPORTAL;
+                    currentObj.ISFTEMPL = data.ISFTEMPL;
+                    currentObj.IT = data.IT;
+                    currentObj.IT_CN = data.IT_CN;
+                    currentObj.LANDCOST = data.LANDCOST;
+                    currentObj.ONLINEPAY = data.ONLINEPAY;
+                    currentObj.PARTS = data.PARTS;
+                    currentObj.QUOTE = data.QUOTE;
+                    currentObj.REPORT = data.REPORT;
+                    currentObj.SAILADMIN = data.SAILADMIN;
+                    currentObj.SELECTSAIL = data.SELECTSAIL;
+                    currentObj.SHIPTRACK = data.SHIPTRACK;
+                    currentObj.SNAPSHOT = data.SNAPSHOT;
+                    currentObj.TRANDASH = data.TRANDASH;
+                    currentObj.TRUCKPORT = data.TRUCKPORT;
+                    currentObj.USP = data.USP;
+                    currentObj.WAREWITH = data.WAREWITH;
+                    console.log(currentObj);
+                    const keys = Object.keys(data);
 
-                const filtered = keys.filter((key) => {
-                    return data[key]
-                });
-                console.log(filtered);
-                const filteredString = filtered.join(",");
-                
-                const currentObjAPICopy = { ...usersAPIList[index] };
-                currentObjAPICopy.programsToAccess = filteredString;
-                if(currentObjAPICopy === null){
-                    currentObjAPICopy.pomRoles = "FDVAL";
+                    const filtered = keys.filter((key) => {
+                        return data[key]
+                    });
+                    console.log(filtered);
+                    const filteredString = filtered.join(",");
+
+                    const currentObjAPICopy = { ...usersAPIList[index] };
+                    currentObjAPICopy.programsToAccess = filteredString;
+                    if (currentObjAPICopy === null) {
+                        currentObjAPICopy.pomRoles = "FDVAL";
+                    }
+                    // dispatch(updateUser(currentObj));
+                    dispatch(updateUser(currentObjAPICopy));
+                    dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
+                    const newState = {
+                        vertical: 'top',
+                        horizontal: 'center',
+                    };
+                    setState({ open: true, ...newState });
+                    setTimeout(() => {
+                        dispatch(getUsersAPI());
+                    }, 3000);
                 }
-                // dispatch(updateUser(currentObj));
-                dispatch(updateUser(currentObjAPICopy));
-                dispatch(putUsersAPI(currentuserId, currentObjAPICopy));
-            }
             } else {
                 alert("Add General Tab Data");
             }
-            if(location.pathname.includes("add")){
+            if (location.pathname.includes("add")) {
                 reset();
             }
         } catch (error) {
             console.error(error);
         }
     };
+    const action = (
+        <>
+          {/* <Button color="secondary" size="small" onClick={handleClose}>
+            UNDO
+          </Button> */}
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <Iconify icon="eva:close-fill" />
+          </IconButton>
+        </>
+      );
     return (
         <>
             <Helmet>
@@ -401,6 +458,15 @@ export default function GeneralAccess() {
                     </Stack>
                 </Card>
             </FormProvider>
+            <Snackbar anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                key={vertical + horizontal}
+                // message = {alertMessage}
+                message={(currentuserId) ? "User Updated" : "Try Again"}
+                autoHideDuration={3500}
+                action={action}
+            />
         </>
     );
 }
