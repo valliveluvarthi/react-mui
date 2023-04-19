@@ -195,7 +195,7 @@ export default function CurrentArticlesPage() {
                 },
               },
             }}
-            getRowId={(row) => row?.articleID || row?.id}
+            getRowId={(row) => row?.articleID || row?.id || row?.pageSeq}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
           />

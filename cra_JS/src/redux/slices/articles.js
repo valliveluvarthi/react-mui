@@ -45,7 +45,7 @@ const slice = createSlice({
     getArticleSuccess(state, action) {
       state.isLoading = false;
       state.article = action.payload;
-      state.currentArticleID = action.payload.id;
+      state.currentArticleID = action.payload.id || action.payload.pageSeq;
     },
     postArticleSuccess(state, action) {
       state.isLoading = false;
@@ -54,7 +54,7 @@ const slice = createSlice({
     },
     updateArticleSuccess(state, action) {
       state.isLoading = false;
-      const index = state.articlesList?.findIndex((col) => col.id === action.payload.id);
+      const index = state.articlesList?.findIndex((col) => col.id === action.payload.id || col.pageSeq === action.payload.pageSeq);
       if (index > 0 || index === 0) {
         state.articlesList.splice(index, 1);
       }
@@ -63,7 +63,7 @@ const slice = createSlice({
     },
     deleteArticleSuccess(state, action) {
       state.isLoading = false;
-      const index = state.articlesList?.findIndex((col) => col.id === action.payload);
+      const index = state.articlesList?.findIndex((col) => col.id === action.payload || col.pageSeq === action.payload.pageSeq);
       if (index > 0 || index === 0) {
         state.articlesList.splice(index, 1);
       }
@@ -72,7 +72,7 @@ const slice = createSlice({
     getArticlesAPISuccess(state,action){
       state.isLoading = false;
       state.articlesList = action.payload;
-      state.currentArticleID = action.payload[action.payload.length - 1].id;
+      // state.currentArticleID = action.payload[action.payload.length - 1].id || action.payload[action.payload.length - 1].pageSeq ;
       state.alertMessage = "";
     },
     postArticlesAPISuccess(state, action) {
