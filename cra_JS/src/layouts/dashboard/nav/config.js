@@ -50,40 +50,40 @@ const navConfig = [
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
-  {
+  // {
     // subheader: 'management',
-    items: [
+    // items: [
       // USER
-      {
-        title: 'user',
-        path: PATH_DASHBOARD.user.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Current Users', path: PATH_DASHBOARD.user.currentUsers },
-          { title: 'Add a New User', path: PATH_DASHBOARD.user.addUser },
+      // {
+      //   title: 'user',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+          // { title: 'Current Users', path: PATH_DASHBOARD.user.currentUsers },
+          // { title: 'Add a New User', path: PATH_DASHBOARD.user.addUser },
           // { title: 'profile', path: PATH_DASHBOARD.user.profile },
           // { title: 'cards', path: PATH_DASHBOARD.user.cards },
           // { title: 'list', path: PATH_DASHBOARD.user.list },
           // { title: 'create', path: PATH_DASHBOARD.user.new },
           // { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
           // { title: 'account', path: PATH_DASHBOARD.user.account },
-        ],
-      },
+      //   ],
+      // },
 
       // Articles
-      {
-        title: 'Articles',
-        path: PATH_DASHBOARD.articles.root,
-        icon: ICONS.folder,
-        children: [
-          { title: 'Current Articles', path: PATH_DASHBOARD.articles.currentArticles },
-          { title: 'Add a New Article', path: PATH_DASHBOARD.articles.addArticles },
+      // {
+      //   title: 'Articles',
+      //   path: PATH_DASHBOARD.articles.root,
+      //   icon: ICONS.folder,
+      //   children: [
+          // { title: 'Current Articles', path: PATH_DASHBOARD.articles.currentArticles },
+          // { title: 'Add a New Article', path: PATH_DASHBOARD.articles.addArticles },
           // { title: 'list', path: PATH_DASHBOARD.eCommerce.list },
           // { title: 'create', path: PATH_DASHBOARD.eCommerce.new },
           // { title: 'edit', path: PATH_DASHBOARD.eCommerce.demoEdit },
           // { title: 'checkout', path: PATH_DASHBOARD.eCommerce.checkout },
-        ],
-      },
+      //   ],
+      // },
       // E-COMMERCE
       // {
       //   title: 'ecommerce',
@@ -128,8 +128,8 @@ const navConfig = [
       //   path: PATH_DASHBOARD.fileManager,
       //   icon: ICONS.folder,
       // },
-    ],
-  },
+    // ],
+  // },
 
   // APP
   // ----------------------------------------------------------------------
