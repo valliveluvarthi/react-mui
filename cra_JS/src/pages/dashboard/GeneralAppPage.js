@@ -19,7 +19,7 @@
 
 // // ----------------------------------------------------------------------
 
-// export default function CurrentUsersPage() {
+// export default function GeneralAppPage() {
 //   const navigate = useNavigate();
 //   const dispatch = useDispatch();
 //   const { themeStretch } = useSettingsContext();
@@ -129,7 +129,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
-export default function CurrentUsersPage() {
+export default function GeneralAppPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();

@@ -19,6 +19,7 @@ export const LoginPage = Loadable(lazy(() => import('../pages/auth/LoginPage')))
 
 // DASHBOARD: GENERAL
 export const GeneralAppPage = Loadable(lazy(() => import('../pages/dashboard/GeneralAppPage')));
+export const GeneralAppImagePage = Loadable(lazy(() => import('../pages/dashboard/GeneralAppImagePage')));
 export const AddUserPage = Loadable(lazy(() => import('../pages/dashboard/AddUserPage')));
 export const CurrentUsersPage = Loadable(lazy(() => import('../pages/dashboard/CurrentUsersPage')));
 export const CurrentArticlesPage = Loadable(lazy(() => import('../pages/dashboard/CurrentArticlesPage')));

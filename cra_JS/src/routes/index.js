@@ -14,6 +14,7 @@ import {
   // Auth
   LoginPage,
   GeneralAppPage,
+  GeneralAppImagePage,
   PermissionDeniedPage,
   Page500,
   Page403,
@@ -57,6 +58,7 @@ export default function Router() {
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralAppPage /> },
+        { path: 'image', element: <GeneralAppImagePage /> },
         {
           path: 'user',
           children: [
