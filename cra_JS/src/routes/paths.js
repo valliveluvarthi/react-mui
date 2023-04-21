@@ -25,6 +25,7 @@ export const PATH_DASHBOARD = {
   general: {
     app: path(ROOTS_DASHBOARD, '/app'),
     image: path(ROOTS_DASHBOARD, '/image'),
+    file: path(ROOTS_DASHBOARD, '/file'),
   },
  
   user: {

@@ -15,7 +15,7 @@ import {
   LoginPage,
   GeneralAppPage,
   GeneralAppImagePage,
-  PermissionDeniedPage,
+  GeneralAppFilePage,
   Page500,
   Page403,
   Page404,
@@ -59,6 +59,7 @@ export default function Router() {
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralAppPage /> },
         { path: 'image', element: <GeneralAppImagePage /> },
+        { path: 'file', element: <GeneralAppFilePage /> },
         {
           path: 'user',
           children: [

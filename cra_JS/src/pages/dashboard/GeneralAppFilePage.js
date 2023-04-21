@@ -1,111 +1,3 @@
-// import * as React from 'react';
-// import Snackbar from '@mui/material/Snackbar';
-// import MuiAlert from '@mui/material/Alert';
-// import { Helmet } from 'react-helmet-async';
-// // @mui
-// import { useState, useEffect } from 'react';
-// import { Container, Grid, Stack, Button, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-// import { DataGrid } from '@mui/x-data-grid';
-// import { useNavigate } from 'react-router-dom';
-
-// // components
-// import { useSettingsContext } from '../../components/settings';
-// import Iconify from '../../components/iconify';
-// // redux
-// import { useDispatch, useSelector } from '../../redux/store';
-// import { getUser, deleteUser, getUsersAPI, deleteUsersAPI } from '../../redux/slices/users';
-// // routes
-// import { PATH_DASHBOARD } from '../../routes/paths';
-
-// // ----------------------------------------------------------------------
-
-// export default function CurrentUsersPage() {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const { themeStretch } = useSettingsContext();
-//   const { usersList, usersAPIList, alertMessage } = useSelector((state) => state.user);
-//   const [selectedParams, setSelectedParams] = useState(null);
-//   const columns = [
-//     { field: 'userId', headerName: 'User ID', width: 100 },
-//     {
-//       field: 'userLogin',
-//       headerName: 'User Login',
-//       width: 200,
-//       editable: true,
-//       align: 'left',
-//     },
-//     {
-//       field: 'email',
-//       headerName: 'User Email Address',
-//       width: 200,
-//       editable: true,
-//       align: 'left',
-//     },
-//     {
-//       field: 'programsToAccess',
-//       headerName: 'Programs To Access',
-//       width: 250,
-//       editable: true,
-//       align: 'left',
-//       renderCell: (params) => {
-//         const element = (
-//           <Box title = {params?.row?.programsToAccess}>
-//             {params?.row?.programsToAccess}
-//           </Box>
-//         );
-//         return element;
-//       },
-//     },
-//     {
-//       field: 'pomRoles',
-//       headerName: 'POM Roles',
-//       width: 250,
-//       editable: true,
-//       align: 'left',
-//       renderCell: (params) => {
-//         const element = (
-//           <Box title = {params?.row?.pomRoles}>
-//             {params?.row?.pomRoles}
-//           </Box>
-//         );
-//         return element;
-//       },
-//     },
-//   ];
-//   useEffect(() => {
-//     dispatch(getUsersAPI());
-//   }, []);
-
-//   return (
-//     <>
-//       <Helmet>
-//         <title> Dashboard | Shapiro 360</title>
-//       </Helmet>
-
-//       <Container maxWidth={themeStretch ? false : 'xl'}>
-//         <Typography variant="h6"> Current Users </Typography>
-//         <Box sx={{ height: 400, width: '100%' }}>
-//           <DataGrid
-//             rows={usersAPIList}
-//             columns={columns}
-//             initialState={{
-//               pagination: {
-//                 paginationModel: {
-//                   pageSize: 5,
-//                 },
-//               },
-//             }}
-//             getRowId={(row) => row?.userId || row?.id}
-//             pageSizeOptions={[5]}
-//             disableRowSelectionOnClick
-//           />
-//         </Box>
-//       </Container>
-//     </>
-//   );
-// }
-
-
 // document type page
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
@@ -129,7 +21,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
-export default function GeneralAppImagePage() {
+export default function GeneralAppFilePage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { themeStretch } = useSettingsContext();
@@ -137,6 +29,7 @@ export default function GeneralAppImagePage() {
     const [selectedParams, setSelectedParams] = useState(null);
     const [encript, setEncript] = useState(false);
     const [encryptedImageString, setEncryptedImageString] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
     const [encryptedString, setEncryptedString] = useState("");
     const [decryptedString, setDecryptedString] = useState("");
     const columns = [
@@ -335,20 +228,20 @@ export default function GeneralAppImagePage() {
         setState({ open: true, ...newState });
         setOpenDialog(false);
     };
-    const encodeImageFileAsURL = (element) => {
+    const encodeFileAsURL = (element) => {
         console.log(element.target.files);
         const file = element.target.files[0];
+        setSelectedFile(file);
+        console.log(file);
         const reader = new FileReader();
         reader.onloadend = function () {
             console.log('RESULT', reader.result)
             setEncryptedImageString(window.btoa(reader.result));
         }
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
         reader.readAsDataURL(file);
-
-        const preview = document.querySelector('.preview');
-        while (preview.firstChild) {
-            preview.removeChild(preview.firstChild);
-        }
     }
     const Base64ToImage = (base64img, callback) => {
         const img = new Image();
@@ -357,58 +250,57 @@ export default function GeneralAppImagePage() {
         };
         img.src = base64img;
     }
+    const base64ToFile = (base64FileString) => {
+        const linkSource = `${base64FileString}`;
+        console.log(linkSource);
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+
+        downloadLink.href = linkSource;
+        downloadLink.target = '_self';
+        downloadLink.download = selectedFile?.name;
+        downloadLink.click();
+        // snack bar
+        const newState = {
+            vertical: 'top',
+            horizontal: 'center',
+        };
+        setState({ open: true, ...newState });
+    }
     return (
         <>
             <Helmet>
-                <title> Image Dashboard | Shapiro 360</title>
+                <title> File Dashboard | Shapiro 360</title>
             </Helmet>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
-                <Typography variant="h5">Encryption and Decryption of images</Typography>
-                {/* <Box sx={{ height: 400, width: '100%' }}>
-          <DataGridPro
-            rows={docTypeList}
-            columns={columns}
-            // initialState={{
-            //   pagination: {
-            //     paginationModel: {
-            //       pageSize: 5,
-            //     },
-            //   },
-            // }}
-            getRowId={(row) => row?.DocType}
-            // pageSizeOptions={[5]}
-            pagination
-            autoHeight
-            disableRowSelectionOnClick
-            initialState={{ pinnedColumns: { left: ['Description'], right: ['actions'] } }}
-          />
-        </Box> */}
+                <Typography variant="h5">Encryption and Decryption of Files</Typography>
                 <Box sx={{ mt: 1 }}>
                     <Typography variant='h6'>To Encode</Typography>
-                    <input type="file" onChange={encodeImageFileAsURL} />
+                    <input type="file" onChange={encodeFileAsURL} />
                     <Box sx={{ mt: 1, width: "100%", display: "flex", flexWrap: "wrap", alignItems: "center" }}>
                         <Box sx={{ mt: 1, width: "100%", overflowX: "auto" }}>
-                            <TextField
+                        <TextField
                                 id="outlined-multiline-static"
-                                label="Encrypted Image String"
+                                label="Encrypted File String"
                                 multiline
                                 rows={4}
                                 fullWidth
                                 value={encryptedImageString}
-                                sx={{ mt: 1.5 }}
+                                sx={{mt:1.5}}
                             />
                         </Box>
                     </Box>
                 </Box>
                 <Box sx={{ mt: 1 }}>
                     <Typography variant='h6'>To Decode</Typography>
-                    <Button onClick={() => Base64ToImage(window.atob(encryptedImageString), (img) => {
+                    {/* <Button onClick={() => Base64ToImage(encryptedImageString, (img) => {
                         document.getElementById('main').appendChild(img);
                     }
                     )
-                    }>Decode encoded image</Button>
-                    <Box id="main" class="preview" sx={{ mt: 1 }} />
+                    }>Decode encoded File</Button> */}
+                    <Button onClick={() => base64ToFile(window.atob(encryptedImageString))}>Decode encoded File</Button>
+                    <Box id="main" sx={{ mt: 1 }} />
                 </Box>
                 <Dialog
                     open={openDialog}
@@ -438,7 +330,7 @@ export default function GeneralAppImagePage() {
                     onClose={handleClose}
                     key={vertical + horizontal}
                     // message={alertMessage}
-                    message={(encript) ? "String Encrypted" : "String Decrypted"}
+                    message={"Decrypted file is downloaded!"}
                     autoHideDuration={1500}
                     action={action}
                 />
