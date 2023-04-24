@@ -113,7 +113,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { useState, useEffect } from 'react';
-import { Container, Grid, Stack, Button, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
+import { Container, Grid, Stack, Button, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useNavigate } from 'react-router-dom';
@@ -136,6 +136,7 @@ export default function GeneralAppPage() {
   const { docTypeList } = useSelector((state) => state.docList);
   const [selectedParams, setSelectedParams] = useState(null);
   const [encript, setEncript] = useState(false);
+  const [encryptTextFieldString, setEncryptTextFieldString] = useState("");
   const [encryptedString, setEncryptedString] = useState("");
   const [decryptedString, setDecryptedString] = useState("");
   const columns = [
@@ -342,8 +343,8 @@ export default function GeneralAppPage() {
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <Typography variant="h6">Document Types</Typography>
-        <Box sx={{ height: 400, width: '100%' }}>
+        {/* <Typography variant="h6">Document Types</Typography> */}
+        {/* <Box sx={{ height: 400, width: '100%' }}>
           <DataGridPro
             rows={docTypeList}
             columns={columns}
@@ -361,7 +362,64 @@ export default function GeneralAppPage() {
             disableRowSelectionOnClick
             initialState={{ pinnedColumns: { left: ['Description'], right: ['actions'] } }}
           />
+        </Box> */}
+        <Typography variant="h5">Encryption and Decryption of Strings</Typography>
+        <Box sx={{ mt: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              id="outlined-multiline-static"
+              label="Encrypted Image String"
+              multiline
+              rows={4}
+              fullWidth
+              onChange={(event) => {
+                setEncryptTextFieldString(event.target.value);
+                if (event.target.value === "") {
+                  setEncryptedString("");
+                  setDecryptedString("");
+                }
+              }}
+              sx={{ mt: 1.5 }}
+            />
+            <Stack flexDirection={'row'} alignItems="center">
+              <>
+                <Tooltip title="Encrypt">
+                  <Iconify
+                    icon="mdi:encryption"
+                    sx={{ cursor: 'pointer', mr: 1, }}
+                    onClick={() => {
+                      if (encryptTextFieldString) {
+                        setOpenDialog(true);
+                        setEncript(true);
+                        setSelectedParams(encryptTextFieldString);
+                        const encrypedStr = window.btoa(encryptTextFieldString);
+                        console.log(encrypedStr);
+                        setEncryptedString(encrypedStr);
+                      }
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip title="Decrypt">
+                  <Iconify
+                    icon="mdi:decrypted"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      if (encryptedString) {
+                        setOpenDialog(true);
+                        setEncript(false);
+                        setSelectedParams(encryptTextFieldString);
+                        const decrypedStr = window.atob(encryptedString);
+                        console.log(decrypedStr);
+                        setDecryptedString(decrypedStr);
+                      }
+                    }}
+                  />
+                </Tooltip>
+              </>
+            </Stack>
+          </Box>
         </Box>
+
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}
@@ -370,7 +428,7 @@ export default function GeneralAppPage() {
         >
           <DialogTitle id="alert-dialog-title">
             <Box>
-              {(encript) ? "Encrypted String" : "Decrypted String"} of {(encript) ? selectedParams?.row?.Description : encryptedString}
+              {(encript) ? "Encrypted String" : "Decrypted String"} of {(encript) ? encryptTextFieldString : encryptedString}
             </Box>
           </DialogTitle>
           <DialogContent>
